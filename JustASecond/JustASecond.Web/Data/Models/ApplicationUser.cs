@@ -4,6 +4,5 @@ namespace JustASecond.Web.Data.Models
 {
     public class ApplicationUser : IdentityUser
     {
-
     }
 }
