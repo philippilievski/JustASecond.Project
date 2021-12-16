@@ -1,0 +1,28 @@
+﻿@page "/table/{tableid:int}"
+@inject NavigationManager manager
+
+
+<button @onclick="CallWaiter">Call Waiter</button>
+<br/>
+<button @onclick="OrderFood">Order Food Directly</button>
+
+<br />
+<br />
+Display Table number:
+@tableId
+
+@code {
+    [Parameter]
+    public int tableId { get; set; }
+
+    private async Task CallWaiter()
+    {
+        // Create call waiter function in Repo und tableid mitgeben
+        throw new NotImplementedException();
+    }
+
+    private async Task OrderFood()
+    {
+        manager.NavigateTo($"order/{tableId}");
+    }
+}
