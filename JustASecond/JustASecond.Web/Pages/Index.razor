@@ -1,3 +1,54 @@
 ﻿@page "/"
 
 <PageTitle>Index</PageTitle>
+
+@using Microsoft.AspNetCore.Components.Authorization
+
+@inject NavigationManager Navigation
+
+<AuthorizeView>
+    <NotAuthorized>
+        @{Navigation.NavigateTo("/loginpage");}
+    </NotAuthorized>
+    <Authorized>
+        <div class="container d-flex flex-column justify-content-center wholepage">
+            <h1 class="text-center">Just A Second</h1>
+            <div class="d-flex justify-content-center">
+                <p class="text-center">Log in</p>
+                <a class="btn" href="Identity/Account/Login">&rarr;</a>
+            </div>
+        </div>
+    </Authorized>
+</AuthorizeView>
+
+<style>
+    h1{
+        color: #F56E6E;
+    }
+    p{
+        color: #F56E6E;
+    }
+    
+    .wholepage {
+        height: 100vh;
+    }
+    .btn {
+        box-sizing: border-box;
+        appearance: none;
+        border: 2px solid #F56E6E;
+        background-color: #F56E6E;
+        border-radius: 0.6em;
+        cursor: pointer;
+        display: flex;
+        align-self: center;
+        line-height: 1;
+        margin: 10px;
+        padding: 1.2em 2.8em;
+        text-decoration: none;
+        text-align: center;
+        color: white;
+    }
+
+</style>
+@code{
+}

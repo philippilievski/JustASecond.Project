@@ -1,17 +1,16 @@
-﻿@page
+﻿@page "/loginpage"
 @model LoginModel
 
 @{
 }
 
-<h1>@ViewData["Title"]</h1>
-<nav class="navbar navbar-expand-lg navbar-light bg-light nav-fill">
-     <a class="navbar-brand" href="~/">Just A Second</a>
-</nav>
 <div class="row">
     <div class="col-md-4">
         <section>
-            <h1>Log in</h1>
+            <form id="account" method="post">
+                <h2 class="text-light">Log in as a waiter</h2>
+                <hr />
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-floating">
                     <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" />
                     <label asp-for="Input.Email" class="form-label"></label>
@@ -24,22 +23,31 @@
                 </div>
                 <div>
                     <div class="checkbox">
-                        <label asp-for="Input.RememberMe" class="form-label">
+                        <label asp-for="Input.RememberMe" class="form-label text-light">
                             <input class="form-check-input" asp-for="Input.RememberMe" />
                             @Html.DisplayNameFor(m => m.Input.RememberMe)
                         </label>
                     </div>
                 </div>
                 <div>
-                    <button id="login-submit" type="submit" class="w-100 btn btn-lg btn-primary">Log in</button>
+                    <button id="login-submit" type="submit" class="w-100 btn btn-lg btn-light">Log in</button>
                 </div>
-        </section>
-    </div>
-    <div class="col-md-6 col-md-offset-2">
-        <section>
+            </form>
         </section>
     </div>
 </div>
+
+<style>
+    h1 {
+        color: white;
+    }
+    html, body {
+        background-color: #282828;
+    }
+    h1 {
+        color: white;
+    }
+</style>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
