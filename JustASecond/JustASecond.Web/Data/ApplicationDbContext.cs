@@ -11,7 +11,7 @@ namespace JustASecond.Web.Data
         {
         }
 
-        public DbSet<ApplicationUser>? Users { get; set; }
+        public DbSet<ApplicationUser>? ApplicationUsers { get; set; }
         public DbSet<Customer>? Customers { get; set; }
         public DbSet<Order>? Orders { get; set; }
         public DbSet<OrderPosition>? OrderPositions { get; set; }
