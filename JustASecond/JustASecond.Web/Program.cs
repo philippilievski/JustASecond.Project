@@ -1,18 +1,26 @@
 using JustASecond.Web.Areas.Identity;
 using JustASecond.Web.Data;
-using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
-using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(connectionString));
+
+builder.Services.AddDbContext<ApplicationDbContext>(builder =>
+{
+    builder.UseMySql(
+        connectionString,
+        ServerVersion.AutoDetect(connectionString),
+        options =>
+        {
+            options.EnableRetryOnFailure();
+            options.CommandTimeout(18000);
+        });
+});
+
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>();
@@ -47,5 +55,13 @@ app.UseAuthorization();
 app.MapControllers();
 app.MapBlazorHub();
 app.MapFallbackToPage("/_Host");
+
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
+using (var serviceScope = app.Services.GetService<IServiceScopeFactory>().CreateScope())
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
+{
+    var context = serviceScope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    context.Database.Migrate();
+}
 
 app.Run();
