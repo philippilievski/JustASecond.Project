@@ -3,8 +3,6 @@
     public class WaiterCall
     {
         public int Id { get; set; }
-        public int CustomerId { get; set; }
-        public virtual Customer? Customer { get; set; }
         public DateTime? CalledAt { get; set; }
         public int Waiter { get; set; }
         public DateTime? AcceptedAt { get; set; }

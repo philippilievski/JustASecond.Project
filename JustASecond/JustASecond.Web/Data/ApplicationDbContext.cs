@@ -12,11 +12,11 @@ namespace JustASecond.Web.Data
         }
 
         public DbSet<ApplicationUser>? ApplicationUsers { get; set; }
-        public DbSet<Customer>? Customers { get; set; }
         public DbSet<Order>? Orders { get; set; }
         public DbSet<OrderPosition>? OrderPositions { get; set; }
         public DbSet<Product>? Products { get; set; }
         public DbSet<Product>? Tables { get; set; }
+        public DbSet<WaiterOrders>? WaiterOrders { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -25,6 +25,9 @@ namespace JustASecond.Web.Data
             // Linked primary key
             builder.Entity<OrderPosition>()
                 .HasKey(x => new { x.OrderId, x.Position });
+
+            builder.Entity<WaiterOrders>()
+                .HasKey(x => new {x.WaiterId, x.OrderId});
         }
     }
 }
