@@ -1,4 +1,4 @@
-﻿@page "/customerlogin/{tableID:int}"
+﻿@page "/customerlogin/{tableID}"
 @inject NavigationManager NavigationManager
 
 <link rel="stylesheet" href="/css/customerlogin.css" />
@@ -23,7 +23,7 @@
 @code {
     private string _name{ get; set; }
     private string? _info;
-    [Parameter] public int tableID { get; set; }
+    [Parameter] public string tableID { get; set; }
 
     private void GoToMainpage()
     {
