@@ -1,6 +1,6 @@
+using JustASecond.DAL.Data;
+using JustASecond.DAL.Data.Models;
 using JustASecond.Web.Areas.Identity;
-using JustASecond.Web.Data;
-using JustASecond.Web.Data.Models;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
