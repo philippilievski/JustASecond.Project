@@ -2,59 +2,53 @@
 
 <PageTitle>Index</PageTitle>
 
+@using JustASecond.Web.Data.ModelViews
+@using JustASecond.Web.Data.Models
+@using Microsoft.AspNetCore.Identity
 @using Microsoft.AspNetCore.Components.Authorization
-
 @inject NavigationManager Navigation
+
+<link rel="stylesheet" href="/css/mainstyle.css">
 
 <AuthorizeView>
     <NotAuthorized>
         @{Navigation.NavigateTo("/loginpage");}
     </NotAuthorized>
     <Authorized>
-        <form method="post" action="Identity/Account/LogOut">
-            <button type="submit" class="nav-link btn btn-link">Log out</button>
-        </form>
-        <!--
-        <div class="container d-flex flex-column justify-content-center wholepage">
-            <h1 class="text-center">Just A Second</h1>
-            <div class="d-flex justify-content-center">
-                <p class="text-center">Log in</p>
-                <a class="btn" href="Identity/Account/Login">&rarr;</a>
-            </div>
+
+        <div class="topnav">
+            <a href="#">Orders</a>
+            <a href="#">Tables</a>
+            <a href="#">History</a>
+            <form method="post" action="Identity/Account/LogOut">
+                <button type="submit" class="linkbutton">Log out</button>
+            </form>
         </div>
-        -->
+        <hr class="divider"/>
+
+        <div>
+            <table class="table">
+              <thead class="thead-light">
+                <tr>
+                  <th scope="col">Ordernumber</th>
+                  <th scope="col">Time</th>
+                  <th scope="col">Table</th>
+                  <th scope="col">Customer</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">1</th>
+                  <td>Mark</td>
+                  <td>Otto</td>
+                  <td>Hallo</td>
+                </tr>
+              </tbody>
+            </table>
+        </div>
+
     </Authorized>
 </AuthorizeView>
 
-<style>
-    h1{
-        color: #F56E6E;
-    }
-    p{
-        color: #F56E6E;
-    }
-    
-    .wholepage {
-        height: 100vh;
-        background-image: url(~/images/JustASecondBackGround.svg);
-    }
-    .btn {
-        box-sizing: border-box;
-        appearance: none;
-        border: 2px solid #F56E6E;
-        background-color: #F56E6E;
-        border-radius: 0.6em;
-        cursor: pointer;
-        display: flex;
-        align-self: center;
-        line-height: 1;
-        margin: 10px;
-        padding: 1.2em 2.8em;
-        text-decoration: none;
-        text-align: center;
-        color: white;
-    }
-
-</style>
 @code{
 }

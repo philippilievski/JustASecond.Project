@@ -1,0 +1,107 @@
+﻿body, html {
+    margin: 0;
+}
+
+.main-login-container {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: row;
+}
+
+.left-container {
+    background-color: #EDF4FA;
+    width: 62vw;
+}
+
+.right-container {
+    background-color: white;
+    width: 38vw;
+    text-align: center;
+    align-content: center;
+    display:flex;
+    flex-direction: column;
+}
+
+h1 {
+    margin-top: 12vh;
+    margin-left: 4vw;
+    font-size: 40px;
+}
+
+.waitress-image {
+    margin-top: 2vh;
+    width: 900px;
+    height: auto;
+}
+
+h2 {
+    margin-top: 12vh;
+    font-size: 45px;
+    margin-bottom: 10vh;
+}
+
+.input-container {
+    margin-top: 4vh;
+}
+
+.button-wrapper {
+    margin-top: 20vh;
+    display: flex;
+    justify-content: center;
+}
+
+.btn {
+    background-color: #96C0E3;
+    color: white;
+}
+
+    .btn:hover {
+        background-color: #96C0E3;
+    }
+
+
+@media (max-width: 742px) {
+
+    h1 {
+        margin-top: 4vh;
+        margin-left: 6vw;
+        font-size: 15px;
+        position: absolute;
+    }
+
+    h2 {
+        margin-top: 5vh;
+        font-size: 20px;
+        margin-bottom: 5vh;
+    }
+
+    .input-container {
+        margin-top: 2vh;
+    }
+
+    .main-login-container {
+        flex-direction: column;
+    }
+
+    .left-container {
+        display: flex;
+        background-color: #EDF4FA;
+        width: 100vw;
+        height: 30vh;
+    }
+    .waitress-image {
+        margin-top: 2vh;
+        width: 300px;
+        height: auto;
+    }
+    .right-container {
+        background-color: white;
+        text-align: center;
+        align-content: center;
+        display: flex;
+        flex-direction: column;
+        width: 100vw;
+        height: 70vh;
+    }
+}

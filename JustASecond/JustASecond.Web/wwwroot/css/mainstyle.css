@@ -1,0 +1,52 @@
+﻿.linkbutton {
+    background: none !important;
+    border: none;
+    padding: 0 !important;
+    text-decoration: underline;
+    cursor: pointer;
+    position: absolute;
+    right: 0;
+    margin-right: 4vw;
+    margin-top: 2vh;
+}
+
+.topnav {
+    margin-top: 2vh;
+    overflow: hidden;
+    background-color: white;
+    position: relative;
+    display: flex;
+}
+
+    .topnav a {
+        color: black;
+        padding: 14px 16px;
+        text-decoration: none;
+        font-size: 20px;
+        margin-left: 3vw;
+        background-color: white;
+        text-align: center;
+        display: inline-block;
+        border-radius: 15px;
+    }
+
+a:focus {
+    background-color: #EDF4FA;
+}
+
+/*
+    .entry-definitions-container {
+        display: flex;
+        flex-direction: row;
+    }
+    .entry-definitions-container p {
+        font-size: 0.8em;
+        font-weight: bold;
+    }
+
+    .entry-container {
+        margin-top: 5vh;
+        display: flex;
+        flex-direction: row;
+    }
+*/
