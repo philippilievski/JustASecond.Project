@@ -2,7 +2,7 @@
 
 namespace JustASecond.DAL.Data.Models
 {
-    public class WaiterOrders
+    public class WaiterOrder
     {
         [Required]
         public string? WaiterId { get; set; }

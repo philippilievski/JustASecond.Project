@@ -16,7 +16,7 @@ namespace JustASecond.DAL.Data
         public DbSet<OrderPosition>? OrderPositions { get; set; }
         public DbSet<Product>? Products { get; set; }
         public DbSet<Product>? Tables { get; set; }
-        public DbSet<WaiterOrders>? WaiterOrders { get; set; }
+        public DbSet<WaiterOrder>? WaiterOrders { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -26,7 +26,7 @@ namespace JustASecond.DAL.Data
             builder.Entity<OrderPosition>()
                 .HasKey(x => new { x.OrderId, x.Position });
 
-            builder.Entity<WaiterOrders>()
+            builder.Entity<WaiterOrder>()
                 .HasKey(x => new { x.WaiterId, x.OrderId });
         }
     }
