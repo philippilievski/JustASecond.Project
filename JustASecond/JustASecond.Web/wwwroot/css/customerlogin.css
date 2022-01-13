@@ -1,0 +1,84 @@
+﻿@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@600&display=swap');
+
+body {
+}
+
+.page-container {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: rgb(237,244,250);
+    background: linear-gradient(180deg, rgba(237,244,250,1) 33%, rgba(255,255,255,1) 100%);
+}
+
+.top-container {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.middle-container {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+.bottom-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 10vh;
+}
+
+.call-to-action-text {
+    font-family: 'Open Sans', sans-serif;
+    margin-top: 15vh;
+    margin-left: 15vw;
+    margin-right: 15vw;
+    font-weight: 600;
+}
+
+.info-text {
+    margin-top: 1.5vh;
+    font-family: 'Open Sans', sans-serif;
+    color: #A9A9A9;
+    font-size: 12px;
+}
+
+.waitress-image {
+     width: 30vw;
+     height: auto;
+}
+
+.btn {
+    margin: 20px;
+    width: 30vw;
+    background-color: #96C0E3;
+    color: white;
+}
+
+    .btn:hover {
+        background-color: #96C0E3;
+    }
+
+.username-input {
+    border: 2px;
+    box-shadow: 0 0 3px black;
+    border-radius: 4px;
+    margin: 10px;
+    width: 20vw;
+}
+
+@media (max-width: 641px){
+    .waitress-image {
+        width: 100%;
+        height: auto;
+    }
+    .btn {
+        width: 66vw;
+    }
+
+    .username-input {
+        width: 60vw;
+    }
+}

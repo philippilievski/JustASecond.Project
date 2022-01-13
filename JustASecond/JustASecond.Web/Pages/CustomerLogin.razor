@@ -1,0 +1,36 @@
+﻿@page "/customerlogin"
+@inject NavigationManager NavigationManager
+
+<link rel="stylesheet" href="/css/customerlogin.css" />
+
+<div class="page-container">
+    <div class="top-container">
+        <img class="waitress-image" src="/images/Waitress_transparent.png" />
+    </div>
+    <div class="middle-container">
+        <h2 class="call-to-action-text">Order Food And Drinks From Your Phone</h2>
+        <p class="info-text">Login to get started</p>
+    </div>
+    <div class="bottom-container">
+        <input class="username-input" type="text" placeholder="Name" @bind="Name"/>
+        <button class="btn" @onclick="GoToMainpage">Get Started</button>
+        <p class="info-text">Powered by JustASecond</p>
+    </div>
+</div>
+
+
+@code {
+    private string Name { get; set; }
+
+    private void GoToMainpage()
+    {
+        if(Name == null)
+        {
+            
+        }
+        else
+        {
+            NavigationManager.NavigateTo("/WaiterCall");
+        }
+    }
+}
