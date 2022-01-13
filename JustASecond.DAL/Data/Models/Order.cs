@@ -1,4 +1,4 @@
-﻿namespace JustASecond.Web.Data.Models
+﻿namespace JustASecond.DAL.Data.Models
 {
     public class Order
     {

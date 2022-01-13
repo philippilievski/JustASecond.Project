@@ -1,8 +1,8 @@
-﻿using JustASecond.Web.Data.Models;
+﻿using JustASecond.DAL.Data.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace JustASecond.Web.Data
+namespace JustASecond.DAL.Data
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
@@ -27,7 +27,7 @@ namespace JustASecond.Web.Data
                 .HasKey(x => new { x.OrderId, x.Position });
 
             builder.Entity<WaiterOrders>()
-                .HasKey(x => new {x.WaiterId, x.OrderId});
+                .HasKey(x => new { x.WaiterId, x.OrderId });
         }
     }
 }

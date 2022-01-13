@@ -1,4 +1,4 @@
-﻿namespace JustASecond.Web.Data.ModelViews
+﻿namespace JustASecond.DAL.Data.ModelViews
 {
     public class CustomerView
     {

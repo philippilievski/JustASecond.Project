@@ -1,6 +1,6 @@
-﻿using JustASecond.Web.Data.Models;
+﻿using JustASecond.DAL.Data.Models;
 
-namespace JustASecond.Web.Data.ModelViews
+namespace JustASecond.DAL.Data.ModelViews
 {
     public class OrderView
     {

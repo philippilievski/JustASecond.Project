@@ -14,7 +14,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
-using JustASecond.Web.Data.Models;
+using JustASecond.DAL.Data.Models;
 
 namespace JustASecond.Web.Areas.Identity.Pages.Account
 {
