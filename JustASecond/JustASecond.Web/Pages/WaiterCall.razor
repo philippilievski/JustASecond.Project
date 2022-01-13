@@ -1,5 +1,17 @@
-﻿@page "/waitercall"
+﻿@page "/waitercall/{tableID:int}/{_name}"
+
+<link rel="stylesheet" href="/css/waitercall.css" />
+
+<div class="top-container">
+    <h2>Hello, @_name!</h2>
+</div>
+
+<div class="bottom-container">
+    <button class="btn btn-round">cw</button>
+    <button class="btn">Go To Cart</button>
+</div>
 
 @code {
-
+    [Parameter] public int tableID { get; set; }
+    [Parameter] public string _name { get; set; }
 }

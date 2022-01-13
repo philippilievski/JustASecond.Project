@@ -1,4 +1,4 @@
-﻿@page "/customerlogin"
+﻿@page "/customerlogin/{tableID:int}"
 @inject NavigationManager NavigationManager
 
 <link rel="stylesheet" href="/css/customerlogin.css" />
@@ -12,7 +12,8 @@
         <p class="info-text">Login to get started</p>
     </div>
     <div class="bottom-container">
-        <input class="username-input" type="text" placeholder="Name" @bind="Name"/>
+        <p>@_info</p>
+        <input class="username-input" type="text" placeholder="Name" @bind="_name"/>
         <button class="btn" @onclick="GoToMainpage">Get Started</button>
         <p class="info-text">Powered by JustASecond</p>
     </div>
@@ -20,17 +21,20 @@
 
 
 @code {
-    private string Name { get; set; }
+    private string _name{ get; set; }
+    private string? _info;
+    [Parameter] public int tableID { get; set; }
 
     private void GoToMainpage()
     {
-        if(Name == null)
+        if(_name == null)
         {
-            
+            _info = "please enter a name";
+            StateHasChanged();
         }
         else
         {
-            NavigationManager.NavigateTo("/WaiterCall");
+            NavigationManager.NavigateTo($"/waitercall/{tableID}/{_name}");
         }
     }
 }

@@ -55,6 +55,7 @@ body {
     width: 30vw;
     background-color: #96C0E3;
     color: white;
+    border-radius: 20px;
 }
 
     .btn:hover {
@@ -64,7 +65,7 @@ body {
 .username-input {
     border: 2px;
     box-shadow: 0 0 3px black;
-    border-radius: 4px;
+    border-radius: 15px;
     margin: 10px;
     width: 20vw;
 }

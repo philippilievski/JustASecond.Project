@@ -53,7 +53,12 @@ h2 {
     justify-content: center;
 }
 
+.form-control {
+    border-radius: 20px;
+}
+
 .btn {
+    border-radius: 20px;
     background-color: #96C0E3;
     color: white;
 }

@@ -2,6 +2,7 @@
 
 <PageTitle>Index</PageTitle>
 
+@using JustASecond.DAL.Data.Models
 @using Microsoft.AspNetCore.Identity
 @using Microsoft.AspNetCore.Components.Authorization
 @inject NavigationManager Navigation
@@ -49,4 +50,6 @@
 </AuthorizeView>
 
 @code{
+    public static List<Table> tables = new();
+
 }

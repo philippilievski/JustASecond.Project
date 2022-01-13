@@ -1,0 +1,30 @@
+﻿body {
+}
+
+.top-container {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    margin-top: 8vh;
+}
+
+.bottom-container {
+    display: flex;
+    flex-direction: row;
+    width: 100vw;
+    position: fixed;
+    bottom: 0;
+}
+
+
+.btn {
+    margin: 20px;
+    width: 30vw;
+    background-color: #96C0E3;
+    color: white;
+    border-radius: 20px;
+}
+
+    .btn:hover {
+        background-color: #96C0E3;
+    }
