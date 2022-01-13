@@ -1,0 +1,89 @@
+﻿using JustASecond.DAL.Data;
+using JustASecond.DAL.Data.Models;
+using JustASecond.DAL.Interfaces;
+using Microsoft.EntityFrameworkCore;
+
+namespace JustASecond.DAL.Repos
+{
+    public class OrderRepo : IOrderRepo
+    {
+        private ApplicationDbContext _db;
+
+        public OrderRepo(ApplicationDbContext db)
+        {
+            _db = db;
+        }
+
+        public async Task AddOrder(Order order)
+        {
+            await _db.Orders.AddAsync(order);
+            await _db.SaveChangesAsync();
+        }
+
+        public async Task AddWaiterOrder(WaiterOrder waiterOrder)
+        {
+            await _db.WaiterOrders.AddAsync(waiterOrder);
+            await _db.SaveChangesAsync();
+        }
+
+        public async Task<Order> GetOrder(string orderId)
+        {
+            var query = from o in _db.Orders
+                        where o.Id == orderId
+                        select o;
+
+            return await query.FirstOrDefaultAsync();
+        }
+
+        public async Task<WaiterOrder> GetWaiterOrder(string orderId, string waiterId)
+        {
+            var query = from w in _db.WaiterOrders
+                        where w.OrderId == orderId && w.WaiterId == waiterId
+                        select w;
+
+            return await query.FirstOrDefaultAsync();
+        }
+
+        public async Task<bool> OrderExists(string orderId)
+        {
+            var query = from o in _db.Orders
+                        where o.Id == orderId
+                        select o;
+
+            return await query.AnyAsync();
+        }
+
+        public async Task RemoveOrder(Order order)
+        {
+            _db.Orders.Remove(order);
+            await _db.SaveChangesAsync();
+        }
+
+        public async Task RemoveWaiterOrder(WaiterOrder waiterOrder)
+        {
+            _db.WaiterOrders.Remove(waiterOrder);
+            await _db.SaveChangesAsync();
+        }
+
+        public async Task UpdateOrder(Order order)
+        {
+            _db.Orders.Update(order);
+            await _db.SaveChangesAsync();
+        }
+
+        public async Task UpdateOrder(WaiterOrder waiterOrder)
+        {
+            _db.WaiterOrders.Update(waiterOrder);
+            await _db.SaveChangesAsync();
+        }
+
+        public async Task<bool> WaiterOrderExists(string orderId, string waiterId)
+        {
+            var query = from w in _db.WaiterOrders
+                        where w.OrderId == orderId && w.WaiterId == waiterId
+                        select w;
+
+            return await query.AnyAsync();
+        }
+    }
+}

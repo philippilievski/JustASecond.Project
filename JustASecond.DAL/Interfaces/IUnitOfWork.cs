@@ -2,6 +2,7 @@
 {
     public interface IUnitOfWork
     {
+        IOrderRepo OrderRepo { get; }
         Task Commit();
         Task Rollback();
     }
