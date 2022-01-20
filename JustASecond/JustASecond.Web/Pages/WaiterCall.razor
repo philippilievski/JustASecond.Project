@@ -2,13 +2,34 @@
 
 <link rel="stylesheet" href="/css/waitercall.css" />
 
-<div class="top-container">
-    <h2>Hello, @_name!</h2>
-</div>
+<div class="page-container">
+    <div class="top-container">
+        <h2>Hello, @_name!</h2>
+    </div>
 
-<div class="bottom-container">
-    <button @onclick="CallWaiter" class="btn btn-round">cw</button>
-    <button class="btn">Go To Cart</button>
+    @for(int i = 0; i < 10; i++)
+    {
+        <div class="menu-container">
+            <div class="food-card">
+                <div class="card-image">
+                    <img />
+                </div>
+                <div class="card-description">
+                    <h2>Deez nuts</h2>
+                    <p class="info-text">Item blabla</p>
+                </div>
+                <div class="card-price">
+                    <button>Add to cart</button>
+                    <h3>420$</h3>
+                </div>
+            </div>
+        </div>
+    }
+
+    <div class="bottom-container">
+        <button @onclick="CallWaiter" class="btn btn-round">Waiter<i class="fa fa-bell-o" aria-hidden="true"></i></button>
+        <button class="btn"><i class="fa fa-shopping-cart" aria-hidden="true"></i></button>
+    </div>
 </div>
 
 @code {

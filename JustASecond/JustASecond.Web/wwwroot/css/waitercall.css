@@ -1,11 +1,23 @@
-﻿body {
+﻿@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@600&display=swap');
+
+
+body {
+    font-family: 'Open Sans', sans-serif;
+}
+
+.page-container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background: rgb(237,244,250);
+    background: linear-gradient(180deg, rgba(237,244,250,1) 75%, rgba(255,255,255,1) 100%);
 }
 
 .top-container {
     display: flex;
     flex-direction: column;
     text-align: center;
-    margin-top: 8vh;
+    margin-top: 6vh;
 }
 
 .bottom-container {
@@ -14,8 +26,64 @@
     width: 100vw;
     position: fixed;
     bottom: 0;
+    justify-content: space-between;
 }
 
+.menu-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.food-card {
+    height: 35vh;
+    width: 75vw;
+    border-radius: 20px;
+    background-color: white;
+    margin: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.card-image {
+    height: 20vh;
+    width: 75vw;
+    border-radius: 20px;
+    background-color: #F6F9FC;
+}
+
+.card-description {
+    margin: 5%;
+}
+
+.card-price {
+    width: 75vw;
+    margin: 5%;
+    display: flex;
+    flex-direction: row;
+}
+
+    .card-price h3 {
+        margin-left: auto;
+        margin-right: 10vw;
+    }
+
+    .card-price button {
+        width: 30vw;
+        background-color: #96C0E3;
+        color: white;
+        border: 0px;
+        border-radius: 20px;
+    }
+
+
+
+.info-text {
+    margin-left: 1vw;
+    margin-top: 1.5vh;
+    color: #A9A9A9;
+    font-size: 12px;
+}
 
 .btn {
     margin: 20px;
