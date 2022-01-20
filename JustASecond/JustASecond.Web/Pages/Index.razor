@@ -2,8 +2,10 @@
 
 <PageTitle>Index</PageTitle>
 
+@using JustASecond.DAL.Data.ModelViews
 @using JustASecond.DAL.Data.Models
 @using JustASecond.DAL.Interfaces
+@using JustASecond.Web.Data.ModelViews
 @using Microsoft.AspNetCore.Identity
 @using Microsoft.AspNetCore.Components.Authorization
 @inject NavigationManager Navigation
@@ -13,7 +15,9 @@
 
 <AuthorizeView>
     <NotAuthorized>
-        @{Navigation.NavigateTo("/loginpage");}
+        @{
+            Navigation.NavigateTo("/loginpage");
+        }
     </NotAuthorized>
     <Authorized>
 
@@ -25,43 +29,73 @@
                 <button type="submit" class="linkbutton">Log out</button>
             </form>
         </div>
-        <hr class="divider"/>
+        <hr class="divider" />
 
         <div>
             <table class="table">
-              <thead class="thead-light">
-                <tr>
-                  <th scope="col">Ordernumber</th>
-                  <th scope="col">Time</th>
-                  <th scope="col">Table</th>
-                  <th scope="col">Customer</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <th scope="row">1</th>
-                  <td>Mark</td>
-                  <td>Otto</td>
-                  <td>Hallo</td>
-                </tr>
-              </tbody>
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col">Ordernumber</th>
+                        <th scope="col">Time</th>
+                        <th scope="col">Table</th>
+                        <th scope="col">Customer</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr @onclick="async () => await SetOrderPositions(1)">
+                        <th scope="row">1</th>
+                        <td>Mark</td>
+                        <td>Otto</td>
+                        <td>Hallo</td>
+                    </tr>
+                    @if (currentOrderPositions != null)
+                    {
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>#</th>>
+                                    <th>Product</th>
+                                    <th>Amount</th>
+                                    <th>Price per product</th>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var orderPosition in currentOrderPositions)
+                                {
+                                    <tr>@orderPosition.Position</tr>
+                                    <tr>@orderPosition.Product.Title</tr>
+                                    <tr>@orderPosition.Amount</tr>
+                                    <tr>@orderPosition.Product.Price</tr>
+                                    <tr>@orderPosition.Total</tr>
+                                }
+                            </tbody>
+                        </table>
+                    }
+                </tbody>
             </table>
         </div>
 
     </Authorized>
 </AuthorizeView>
 
-@code{
+@code {
     public static List<Table> tables;
-
+    private ICollection<OrderPositionView>? currentOrderPositions;
+    private OrderView? selectedOrder;
     public static bool firstrendered = true;
 
     protected override async Task OnInitializedAsync()
     {
-        if(firstrendered)
+        if (firstrendered)
         {
             firstrendered = false;
             tables = (await unitOfWork.OrderRepo.GetTables()).ToList();
         }
+    }
+
+    private async Task SetOrderPositions(int orderId)
+    {
+        currentOrderPositions = await unitOfWork.OrderRepo.GetAllFromOrder(orderId);
     }
 }
