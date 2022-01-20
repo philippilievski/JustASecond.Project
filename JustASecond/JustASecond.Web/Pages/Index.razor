@@ -12,9 +12,6 @@
 <link rel="stylesheet" href="/css/mainstyle.css">
 
 <AuthorizeView>
-    <NotAuthorized>
-        @{Navigation.NavigateTo("/loginpage");}
-    </NotAuthorized>
     <Authorized>
 
         <div class="topnav">
@@ -58,6 +55,15 @@
 
     protected override async Task OnInitializedAsync()
     {
+        var principal = HttpContextAccessor.HttpContext.User;
+        var loggedInUserId = principal.FindFirstValue(ClaimTypes.NameIdentifier);
+        var user = await _userManager.FindByIdAsync(loggedInUserId);
+
+        if(!principal.Identity.IsAuthenticated)
+        {
+            Navigation.NavigateTo("loginpage");
+        }
+
         if(firstrendered)
         {
             firstrendered = false;
