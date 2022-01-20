@@ -3,10 +3,7 @@ using JustASecond.DAL.Data.Models;
 using JustASecond.DAL.Interfaces;
 using JustASecond.DAL.Repos;
 using JustASecond.Web.Areas.Identity;
-using JustASecond.Web.Data;
-using JustASecond.Web.Data.Models;
 using Microsoft.AspNetCore.Components.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -33,7 +30,7 @@ builder.Services.AddAuthentication();
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<ApplicationUser>>();
-builder.Services.AddScoped<UnitOfWork>();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 var app = builder.Build();
 
