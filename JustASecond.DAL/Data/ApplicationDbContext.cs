@@ -12,7 +12,6 @@ namespace JustASecond.DAL.Data
         {
         }
 
-        public DbSet<ApplicationUser>? ApplicationUsers { get; set; }
         public DbSet<Order>? Orders { get; set; }
         public DbSet<OrderPosition>? OrderPositions { get; set; }
         public DbSet<Product>? Products { get; set; }
@@ -27,9 +26,6 @@ namespace JustASecond.DAL.Data
             // Linked primary key
             builder.Entity<OrderPosition>()
                 .HasKey(x => new { x.OrderId, x.Position });
-
-            builder.Entity<WaiterOrder>()
-                .HasKey(x => new { x.WaiterId, x.OrderId });
 
             var user = new ApplicationUser()
             {

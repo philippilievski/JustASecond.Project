@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JustASecond.DAL.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220113153214_Deez")]
-    partial class Deez
+    [Migration("20220120143047_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -83,12 +83,31 @@ namespace JustASecond.DAL.Migrations
                         .HasDatabaseName("UserNameIndex");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "z65dbe81-22b1-4479-j58g-d730ap050aa1",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "e0ca5199-11e2-4455-aaab-b92f35cd5ead",
+                            Email = "admin@justasecond.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "ADMIN@JUSTASECOND.COM",
+                            NormalizedUserName = "ADMIN@JUSTASECOND.COM",
+                            PasswordHash = "AQAAAAEAACcQAAAAEKrBaAX6bqaPTMKWJWlyMHO6zCEzoTGBLGFj8RAI1SdYDTqjSmQs4n1LBiboSdTLoQ==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "c471b3ee-a001-4ee2-ac28-0ec5b2bf42d9",
+                            TwoFactorEnabled = false,
+                            UserName = "admin@justasecond.com"
+                        });
                 });
 
             modelBuilder.Entity("JustASecond.DAL.Data.Models.Order", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("varchar(255)");
+                    b.Property<int?>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
 
                     b.Property<DateTime?>("CreatedDate")
                         .HasColumnType("datetime(6)");
@@ -112,15 +131,10 @@ namespace JustASecond.DAL.Migrations
                     b.Property<int>("Position")
                         .HasColumnType("int");
 
-                    b.Property<string>("OrderId1")
-                        .HasColumnType("varchar(255)");
-
                     b.Property<int?>("ProductId")
                         .HasColumnType("int");
 
                     b.HasKey("OrderId", "Position");
-
-                    b.HasIndex("OrderId1");
 
                     b.HasIndex("ProductId");
 
@@ -133,11 +147,21 @@ namespace JustASecond.DAL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
+                    b.Property<string>("Description")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Image")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
                     b.Property<string>("Price")
                         .HasColumnType("longtext");
 
                     b.Property<string>("Title")
                         .HasColumnType("longtext");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -146,8 +170,9 @@ namespace JustASecond.DAL.Migrations
 
             modelBuilder.Entity("JustASecond.DAL.Data.Models.Table", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("varchar(255)");
+                    b.Property<int?>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
 
                     b.Property<bool>("HasCalled")
                         .HasColumnType("tinyint(1)");
@@ -157,20 +182,56 @@ namespace JustASecond.DAL.Migrations
                     b.ToTable("Tables");
                 });
 
-            modelBuilder.Entity("JustASecond.DAL.Data.Models.WaiterOrder", b =>
+            modelBuilder.Entity("JustASecond.DAL.Data.Models.WaiterCall", b =>
                 {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("AcceptedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<DateTime?>("CalledAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<int>("TableId")
+                        .HasColumnType("int");
+
                     b.Property<string>("WaiterId")
+                        .IsRequired()
                         .HasColumnType("varchar(255)");
 
-                    b.Property<string>("OrderId")
-                        .HasColumnType("varchar(255)");
+                    b.HasKey("Id");
+
+                    b.HasIndex("TableId");
+
+                    b.HasIndex("WaiterId");
+
+                    b.ToTable("WaiterCalls");
+                });
+
+            modelBuilder.Entity("JustASecond.DAL.Data.Models.WaiterOrder", b =>
+                {
+                    b.Property<int>("WaiterOrderId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int?>("OrderId")
+                        .IsRequired()
+                        .HasColumnType("int");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.HasKey("WaiterId", "OrderId");
+                    b.Property<string>("WaiterId")
+                        .IsRequired()
+                        .HasColumnType("varchar(255)");
+
+                    b.HasKey("WaiterOrderId");
 
                     b.HasIndex("OrderId");
+
+                    b.HasIndex("WaiterId");
 
                     b.ToTable("WaiterOrders");
                 });
@@ -199,6 +260,22 @@ namespace JustASecond.DAL.Migrations
                         .HasDatabaseName("RoleNameIndex");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "rrrrrrrr-22b1-4479-j58g-rrrrrrrr",
+                            ConcurrencyStamp = "f5e85ba9-fda7-4769-82df-91302d1f2270",
+                            Name = "Admin",
+                            NormalizedName = "ADMIN"
+                        },
+                        new
+                        {
+                            Id = "rrrrrrrr-l0w6-hhhh-jf84-rrrrrrrr",
+                            ConcurrencyStamp = "3d191124-af10-49a8-b8e6-d98a7c323e3d",
+                            Name = "Waiter",
+                            NormalizedName = "WAITER"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -284,6 +361,13 @@ namespace JustASecond.DAL.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = "z65dbe81-22b1-4479-j58g-d730ap050aa1",
+                            RoleId = "rrrrrrrr-22b1-4479-j58g-rrrrrrrr"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -311,7 +395,9 @@ namespace JustASecond.DAL.Migrations
                 {
                     b.HasOne("JustASecond.DAL.Data.Models.Order", "Order")
                         .WithMany("OrderPositions")
-                        .HasForeignKey("OrderId1");
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("JustASecond.DAL.Data.Models.Product", "Product")
                         .WithMany("OrderPositions")
@@ -320,6 +406,25 @@ namespace JustASecond.DAL.Migrations
                     b.Navigation("Order");
 
                     b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("JustASecond.DAL.Data.Models.WaiterCall", b =>
+                {
+                    b.HasOne("JustASecond.DAL.Data.Models.Table", "Table")
+                        .WithMany()
+                        .HasForeignKey("TableId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("JustASecond.DAL.Data.Models.ApplicationUser", "Waiter")
+                        .WithMany()
+                        .HasForeignKey("WaiterId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Table");
+
+                    b.Navigation("Waiter");
                 });
 
             modelBuilder.Entity("JustASecond.DAL.Data.Models.WaiterOrder", b =>

@@ -4,6 +4,7 @@ using JustASecond.DAL.Interfaces;
 using JustASecond.DAL.Repos;
 using JustASecond.Web.Areas.Identity;
 using Microsoft.AspNetCore.Components.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -25,7 +26,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(builder =>
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
-    .AddEntityFrameworkStores<ApplicationDbContext>();
+                .AddRoles<IdentityRole>()
+                .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddAuthentication();
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();

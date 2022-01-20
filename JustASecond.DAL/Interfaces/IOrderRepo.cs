@@ -7,14 +7,14 @@ namespace JustASecond.DAL.Interfaces
     {
         Task AddOrder(Order order);
         Task RemoveOrder(Order order);
-        Task<Order> GetOrder(string orderId);
-        Task<bool> OrderExists(string orderId);
+        Task<Order> GetOrder(int orderId);
+        Task<bool> OrderExists(int orderId);
         Task UpdateOrder(Order order);
 
         Task AddWaiterOrder(WaiterOrder waiterOrder);
         Task RemoveWaiterOrder(WaiterOrder waiterOrder);
-        Task<WaiterOrder> GetWaiterOrder(string orderId, string waiterId);
-        Task<bool> WaiterOrderExists(string orderId, string waiterId);
+        Task<WaiterOrder> GetWaiterOrder(int orderId, string waiterId);
+        Task<bool> WaiterOrderExists(int orderId, string waiterId);
         Task UpdateWaiterOrder(WaiterOrder waiterOrder);
 
         Task AddTable(Table table);
