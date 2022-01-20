@@ -20,6 +20,11 @@ body {
     margin-top: 6vh;
 }
 
+.divider-container {
+    width: 100vw;
+    height: 10vh;
+}
+
 .bottom-container {
     display: flex;
     flex-direction: row;
@@ -50,7 +55,15 @@ body {
     width: 75vw;
     border-radius: 20px;
     background-color: #F6F9FC;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
 }
+
+    .card-image img {
+        width: 30vw;
+        height: auto;
+    }
 
 .card-description {
     margin: 5%;
@@ -75,7 +88,6 @@ body {
         border: 0px;
         border-radius: 20px;
     }
-
 
 
 .info-text {
