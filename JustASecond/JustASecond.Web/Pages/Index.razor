@@ -100,6 +100,6 @@
 
     private async Task SetOrderPositions(int orderId)
     {
-        currentOrderPositions = (await unitOfWork.OrderRepo.GetPositionsAllFromOrder(orderId)).ToList();
+        currentOrderPositions = (await unitOfWork.OrderRepo.GetAllPositionsFromOrder(orderId)).ToList();
     }
 }

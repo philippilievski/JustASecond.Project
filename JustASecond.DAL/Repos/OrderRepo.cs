@@ -133,7 +133,7 @@ namespace JustASecond.DAL.Repos
             return await query.AnyAsync();
         }
 
-        public async Task<IEnumerable<OrderPositionView>> GetPositionsAllFromOrder(int orderId)
+        public async Task<IEnumerable<OrderPositionView>> GetAllPositionsFromOrder(int orderId)
         {
             return await db.OrderPositions!
                 .Where(x => x.OrderId == orderId)

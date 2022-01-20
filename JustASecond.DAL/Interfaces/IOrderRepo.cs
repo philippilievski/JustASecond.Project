@@ -26,6 +26,6 @@ namespace JustASecond.DAL.Interfaces
         Task RemoveWaiterCall(WaiterCall call);
         Task<IEnumerable<WaiterCall>> GetWaiterCalls(string waiterId);
 
-        Task<IEnumerable<OrderPositionView>> GetPositionsAllFromOrder(int orderId);
+        Task<IEnumerable<OrderPositionView>> GetAllPositionsFromOrder(int orderId);
     }
 }

@@ -23,8 +23,4 @@
     <ProjectReference Include="..\..\JustASecond.DAL\JustASecond.DAL.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="wwwroot\food\" />
-  </ItemGroup>
-
 </Project>

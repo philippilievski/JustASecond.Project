@@ -8,6 +8,7 @@ namespace JustASecond.DAL.Repos
     {
         private ApplicationDbContext _db;
         private IOrderRepo _orderRepo;
+        private IProductRepo _productRepo;
 
         public UnitOfWork(ApplicationDbContext db)
         {
@@ -15,6 +16,7 @@ namespace JustASecond.DAL.Repos
         }
 
         public IOrderRepo OrderRepo { get => _orderRepo ?? new OrderRepo(_db); }
+        public IProductRepo ProductRepo { get => _productRepo ?? new ProductRepo(_db); }
 
         public Task Commit()
         {

@@ -1,43 +1,72 @@
-﻿@page "/waitercall/{tableID}/{_name}"
+﻿@using JustASecond.DAL.Data.Models
+@using JustASecond.DAL.Interfaces
+@inject IUnitOfWork unitOfWork
+
+
+@page "/waitercall/{tableID}/{_name}"
 
 <link rel="stylesheet" href="/css/waitercall.css" />
 
-<div class="page-container">
-    <div class="top-container">
-        <h2>Hello, @_name!</h2>
-    </div>
+@if(_products == null || _products.Count <= 0)
+{
+    <p><em>No Products avaliable</em></p>
+}
+else
+{
+    <div class="page-container">
+        <div class="top-container">
+            <h2>Hello, @_name!</h2>
+        </div>
 
-    @for(int i = 0; i < 10; i++)
-    {
-        <div class="menu-container">
-            <div class="food-card">
-                <div class="card-image">
-                    <img />
-                </div>
-                <div class="card-description">
-                    <h2>Deez nuts</h2>
-                    <p class="info-text">Item blabla</p>
-                </div>
-                <div class="card-price">
-                    <button>Add to cart</button>
-                    <h3>420$</h3>
+        @foreach(var item in _products)
+        {
+            <div class="menu-container">
+                <div class="food-card">
+                    <div class="card-image">
+                        <img src="/images/food/@item.Image" />
+                    </div>
+                    <div class="card-description">
+                        <h2>@item.Title</h2>
+                        <p class="info-text">@item.Description</p>
+                    </div>
+                    <div class="card-price">
+                        <button @onclick="() => AddToCart(item)" class="@_added">Add to cart</button>
+                        <h3>@item.Price$</h3>
+                    </div>
                 </div>
             </div>
-        </div>
-    }
+        }
+        <div class="divider-container">
 
-    <div class="bottom-container">
-        <button @onclick="CallWaiter" class="btn btn-round">Waiter<i class="fa fa-bell-o" aria-hidden="true"></i></button>
-        <button class="btn"><i class="fa fa-shopping-cart" aria-hidden="true"></i></button>
+        </div>
+
+        <div class="bottom-container">
+            <button @onclick="CallWaiter" class="btn btn-round">Waiter<i class="fa fa-bell-o" aria-hidden="true"></i></button>
+            <button class="btn"><i class="fa fa-shopping-cart" aria-hidden="true"></i></button>
+        </div>
     </div>
-</div>
+}
 
 @code {
     [Parameter] public string tableID { get; set; }
     [Parameter] public string _name { get; set; }
 
+    private List<Product> _products;
+    private Order _order = new Order();
+    private string _added;
+
+    protected async override Task OnInitializedAsync()
+    {
+        _products = (await unitOfWork.ProductRepo.GetAllProducts()).ToList();
+    }
+
     private void CallWaiter()
     {
         Index.tables[Index.tables.FindIndex(t => t.Id == tableID)].HasCalled = true;
+    }
+
+    private async void AddToCart(Product product)
+    {
+        _added = "btn-item-added";
     }
 }
