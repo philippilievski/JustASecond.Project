@@ -1,4 +1,4 @@
-﻿@page "/waitercall/{tableID:int}/{_name}"
+﻿@page "/waitercall/{tableID}/{_name}"
 
 <link rel="stylesheet" href="/css/waitercall.css" />
 
@@ -7,11 +7,16 @@
 </div>
 
 <div class="bottom-container">
-    <button class="btn btn-round">cw</button>
+    <button @onclick="CallWaiter" class="btn btn-round">cw</button>
     <button class="btn">Go To Cart</button>
 </div>
 
 @code {
-    [Parameter] public int tableID { get; set; }
+    [Parameter] public string tableID { get; set; }
     [Parameter] public string _name { get; set; }
+
+    private void CallWaiter()
+    {
+        Index.tables[Index.tables.FindIndex(t => t.Id == tableID)].HasCalled = true;
+    }
 }
