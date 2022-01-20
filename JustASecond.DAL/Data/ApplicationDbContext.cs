@@ -17,6 +17,7 @@ namespace JustASecond.DAL.Data
         public DbSet<Product>? Products { get; set; }
         public DbSet<Table>? Tables { get; set; }
         public DbSet<WaiterOrder>? WaiterOrders { get; set; }
+        public DbSet<WaiterCall>? WaiterCalls { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

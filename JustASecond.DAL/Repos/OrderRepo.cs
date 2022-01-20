@@ -26,6 +26,12 @@ namespace JustASecond.DAL.Repos
             await _db.SaveChangesAsync();
         }
 
+        public async Task AddWaiterCall(WaiterCall call)
+        {
+            await _db.WaiterCalls.AddAsync(call);
+            await _db.SaveChangesAsync();
+        }
+
         public async Task AddWaiterOrder(WaiterOrder waiterOrder)
         {
             await _db.WaiterOrders.AddAsync(waiterOrder);
@@ -45,6 +51,15 @@ namespace JustASecond.DAL.Repos
         {
             var query = from o in _db.Tables
                        select o;
+
+            return await query.ToListAsync();
+        }
+
+        public async Task<IEnumerable<WaiterCall>> GetWaiterCalls(string waiterId)
+        {
+            var query = from w in _db.WaiterCalls
+                        where w.WaiterId == waiterId
+                        select w;
 
             return await query.ToListAsync();
         }
@@ -79,6 +94,12 @@ namespace JustASecond.DAL.Repos
             await _db.SaveChangesAsync();
         }
 
+        public async Task RemoveWaiterCall(WaiterCall call)
+        {
+            _db.WaiterCalls.Remove(call);
+            await _db.SaveChangesAsync();
+        }
+
         public async Task RemoveWaiterOrder(WaiterOrder waiterOrder)
         {
             _db.WaiterOrders.Remove(waiterOrder);
@@ -91,7 +112,7 @@ namespace JustASecond.DAL.Repos
             await _db.SaveChangesAsync();
         }
 
-        public async Task UpdateOrder(WaiterOrder waiterOrder)
+        public async Task UpdateWaiterOrder(WaiterOrder waiterOrder)
         {
             _db.WaiterOrders.Update(waiterOrder);
             await _db.SaveChangesAsync();
