@@ -3,9 +3,11 @@
 <PageTitle>Index</PageTitle>
 
 @using JustASecond.DAL.Data.Models
+@using JustASecond.DAL.Interfaces
 @using Microsoft.AspNetCore.Identity
 @using Microsoft.AspNetCore.Components.Authorization
 @inject NavigationManager Navigation
+@inject IUnitOfWork unitOfWork
 
 <link rel="stylesheet" href="/css/mainstyle.css">
 
@@ -50,6 +52,16 @@
 </AuthorizeView>
 
 @code{
-    public static List<Table> tables = new();
+    public static List<Table> tables;
 
+    public static bool firstrendered = true;
+
+    protected override async Task OnInitializedAsync()
+    {
+        if(firstrendered)
+        {
+            firstrendered = false;
+            tables = (await unitOfWork.OrderRepo.GetTables()).ToList();
+        }
+    }
 }

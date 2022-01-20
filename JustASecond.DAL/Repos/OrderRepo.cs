@@ -20,6 +20,12 @@ namespace JustASecond.DAL.Repos
             await _db.SaveChangesAsync();
         }
 
+        public async Task AddTable(Table table)
+        {
+            await _db.Tables.AddAsync(table);
+            await _db.SaveChangesAsync();
+        }
+
         public async Task AddWaiterOrder(WaiterOrder waiterOrder)
         {
             await _db.WaiterOrders.AddAsync(waiterOrder);
@@ -33,6 +39,14 @@ namespace JustASecond.DAL.Repos
                         select o;
 
             return await query.FirstOrDefaultAsync();
+        }
+
+        public async Task<IEnumerable<Table>> GetTables()
+        {
+            var query = from o in _db.Tables
+                       select o;
+
+            return await query.ToListAsync();
         }
 
         public async Task<WaiterOrder> GetWaiterOrder(string orderId, string waiterId)
@@ -56,6 +70,12 @@ namespace JustASecond.DAL.Repos
         public async Task RemoveOrder(Order order)
         {
             _db.Orders.Remove(order);
+            await _db.SaveChangesAsync();
+        }
+
+        public async Task RemoveTable(Table table)
+        {
+            _db.Tables.Remove(table);
             await _db.SaveChangesAsync();
         }
 
