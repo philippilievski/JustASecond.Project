@@ -1,4 +1,5 @@
 ﻿using JustASecond.DAL.Data.Models;
+using JustASecond.Web.Data.ModelViews;
 
 namespace JustASecond.DAL.Interfaces
 {
@@ -14,10 +15,17 @@ namespace JustASecond.DAL.Interfaces
         Task RemoveWaiterOrder(WaiterOrder waiterOrder);
         Task<WaiterOrder> GetWaiterOrder(string orderId, string waiterId);
         Task<bool> WaiterOrderExists(string orderId, string waiterId);
-        Task UpdateOrder(WaiterOrder waiterOrder);
+        Task UpdateWaiterOrder(WaiterOrder waiterOrder);
 
         Task AddTable(Table table);
         Task RemoveTable(Table table);
         Task<IEnumerable<Table>> GetTables();
+
+
+        Task AddWaiterCall(WaiterCall call);
+        Task RemoveWaiterCall(WaiterCall call);
+        Task<IEnumerable<WaiterCall>> GetWaiterCalls(string waiterId);
+
+        Task<IEnumerable<OrderPositionView>> GetPositionsAllFromOrder(int orderId);
     }
 }

@@ -4,7 +4,6 @@ using JustASecond.DAL.Interfaces;
 using JustASecond.DAL.Repos;
 using JustASecond.Web.Areas.Identity;
 using Microsoft.AspNetCore.Components.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -30,8 +29,8 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.R
 builder.Services.AddAuthentication();
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
-builder.Services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
-builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<ApplicationUser>>();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 var app = builder.Build();
 
@@ -59,13 +58,5 @@ app.UseAuthorization();
 app.MapControllers();
 app.MapBlazorHub();
 app.MapFallbackToPage("/_Host");
-
-#pragma warning disable CS8602 // Dereference of a possibly null reference.
-using (var serviceScope = app.Services.GetService<IServiceScopeFactory>().CreateScope())
-#pragma warning restore CS8602 // Dereference of a possibly null reference.
-{
-    var context = serviceScope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-    context.Database.Migrate();
-}
 
 app.Run();
