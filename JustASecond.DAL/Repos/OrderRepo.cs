@@ -44,7 +44,7 @@ namespace JustASecond.DAL.Repos
             await db.SaveChangesAsync();
         }
 
-        public async Task<Order> GetOrder(string orderId)
+        public async Task<Order> GetOrder(int orderId)
         {
             var query = from o in db.Orders
                         where o.Id == orderId
@@ -70,7 +70,7 @@ namespace JustASecond.DAL.Repos
             return await query.ToListAsync();
         }
 
-        public async Task<WaiterOrder> GetWaiterOrder(string orderId, string waiterId)
+        public async Task<WaiterOrder> GetWaiterOrder(int orderId, string waiterId)
         {
             var query = from w in db.WaiterOrders
                         where w.OrderId == orderId && w.WaiterId == waiterId
@@ -79,7 +79,7 @@ namespace JustASecond.DAL.Repos
             return await query.FirstOrDefaultAsync();
         }
 
-        public async Task<bool> OrderExists(string orderId)
+        public async Task<bool> OrderExists(int orderId)
         {
             var query = from o in db.Orders
                         where o.Id == orderId
@@ -124,7 +124,7 @@ namespace JustASecond.DAL.Repos
             await db.SaveChangesAsync();
         }
 
-        public async Task<bool> WaiterOrderExists(string orderId, string waiterId)
+        public async Task<bool> WaiterOrderExists(int orderId, string waiterId)
         {
             var query = from w in db.WaiterOrders
                         where w.OrderId == orderId && w.WaiterId == waiterId
