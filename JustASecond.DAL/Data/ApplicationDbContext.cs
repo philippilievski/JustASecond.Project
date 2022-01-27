@@ -25,7 +25,7 @@ namespace JustASecond.DAL.Data
 
             // Linked primary key
             builder.Entity<OrderPosition>()
-                .HasKey(x => new { x.OrderId, x.PositionNr });
+                .HasKey(x => new { x.OrderId, x.Position });
 
             var user = new ApplicationUser()
             {

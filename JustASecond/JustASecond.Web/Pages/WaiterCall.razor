@@ -54,47 +54,57 @@ else
     public string _name { get; set; }
 
     private List<Product> _products;
-    private Order _order = new Order();
+    private Order _order;
     private string _added;
     private int _highestpositionnr;
+    private int _orderid;
 
     private string _btncolorstyle;
 
     protected async override Task OnInitializedAsync()
     {
         _products = (await unitOfWork.ProductRepo.GetAllProducts()).ToList();
+        _orderid = await GetHighestOrderID();
+        _order = new Order
+            {
+                CreatedDate = DateTime.Now,
+                Id = _orderid
+            };
+        await unitOfWork.OrderRepo.AddOrder(_order);
+        
+    }
 
+    private async void AddToCart(Product product)
+    {
+        _highestpositionnr = await GetHighestPositionNR(_order);
+        _order.OrderPositions.Add(new OrderPosition
+            {
+                Amount = 1,
+                Position = _highestpositionnr,
+                Product = product
+            });
+    }
+
+    private async Task<int> GetHighestOrderID()
+    {
+        var _highestorderid = await unitOfWork.OrderRepo.GetHighestOrderID() +1;
+        return _highestorderid;
+    }
+
+    private async Task<int> GetHighestPositionNR(Order _order)
+    {
+        _highestpositionnr = await unitOfWork.OrderRepo.GetHighestPositionFromOrderposition(_order) + 1;
+        return _highestpositionnr;
+    }
+
+    private async void GoToBasket()
+    {
+        await unitOfWork.OrderRepo.AddOrder(_order);
     }
 
     private void CallWaiter()
     {
         //Index.tables[Index.tables.FindIndex(t => t.Id == tableID)].HasCalled = true;
         _btncolorstyle = "btn-successfull";
-    }
-
-    private async void AddToCart(Product product)
-    {
-        if(_order.Id != null)
-        {
-            _order.CreatedDate = DateTime.Now;
-            unitOfWork.OrderRepo.AddOrder(_order);
-            _highestpositionnr = _order.OrderPositions.Where(x => x.Product == product).Max(x => x.PositionNr) + 1;
-        }
-        else
-        {
-            _highestpositionnr = 1;
-        }
-
-        
-        _order.OrderPositions.Add(new OrderPosition
-            {
-                Product = product,
-                PositionNr = _highestpositionnr
-            });
-    }
-
-    private async void GoToBasket()
-    {
-        await unitOfWork.OrderRepo.AddOrder(_order);
     }
 }

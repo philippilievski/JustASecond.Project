@@ -29,5 +29,10 @@ namespace JustASecond.DAL.Interfaces
         Task<IEnumerable<WaiterCall>> GetWaiterCalls(string waiterId);
 
         Task<IEnumerable<OrderPositionView>> GetAllPositionsFromOrder(int orderId);
+
+        Task<int> GetHighestPositionFromOrderposition(Order order);
+
+        Task<int> GetHighestOrderID();
+
     }
 }
