@@ -68,24 +68,6 @@ namespace JustASecond.DAL.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "Orders",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Firstname = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Lastname = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    CreatedDate = table.Column<DateTime>(type: "datetime(6)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Orders", x => x.Id);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.CreateTable(
                 name: "Products",
                 columns: table => new
                 {
@@ -249,56 +231,23 @@ namespace JustASecond.DAL.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "WaiterOrders",
+                name: "Orders",
                 columns: table => new
                 {
-                    WaiterOrderId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    WaiterId = table.Column<string>(type: "varchar(255)", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    OrderId = table.Column<int>(type: "int", nullable: false),
-                    Status = table.Column<int>(type: "int", nullable: false)
+                    CreatedDate = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    TableId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_WaiterOrders", x => x.WaiterOrderId);
+                    table.PrimaryKey("PK_Orders", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_WaiterOrders_AspNetUsers_WaiterId",
-                        column: x => x.WaiterId,
-                        principalTable: "AspNetUsers",
+                        name: "FK_Orders_Tables_TableId",
+                        column: x => x.TableId,
+                        principalTable: "Tables",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_WaiterOrders_Orders_OrderId",
-                        column: x => x.OrderId,
-                        principalTable: "Orders",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.CreateTable(
-                name: "OrderPositions",
-                columns: table => new
-                {
-                    Position = table.Column<int>(type: "int", nullable: false),
-                    OrderId = table.Column<int>(type: "int", nullable: false),
-                    ProductId = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_OrderPositions", x => new { x.OrderId, x.Position });
-                    table.ForeignKey(
-                        name: "FK_OrderPositions_Orders_OrderId",
-                        column: x => x.OrderId,
-                        principalTable: "Orders",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_OrderPositions_Products_ProductId",
-                        column: x => x.ProductId,
-                        principalTable: "Products",
-                        principalColumn: "Id");
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -332,20 +281,75 @@ namespace JustASecond.DAL.Migrations
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
-            migrationBuilder.InsertData(
-                table: "AspNetRoles",
-                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "rrrrrrrr-22b1-4479-j58g-rrrrrrrr", "f5e85ba9-fda7-4769-82df-91302d1f2270", "Admin", "ADMIN" });
+            migrationBuilder.CreateTable(
+                name: "OrderPositions",
+                columns: table => new
+                {
+                    Position = table.Column<int>(type: "int", nullable: false),
+                    OrderId = table.Column<int>(type: "int", nullable: false),
+                    Amount = table.Column<int>(type: "int", nullable: false),
+                    ProductId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_OrderPositions", x => new { x.OrderId, x.Position });
+                    table.ForeignKey(
+                        name: "FK_OrderPositions_Orders_OrderId",
+                        column: x => x.OrderId,
+                        principalTable: "Orders",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_OrderPositions_Products_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "Products",
+                        principalColumn: "Id");
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "WaiterOrders",
+                columns: table => new
+                {
+                    WaiterOrderId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    WaiterId = table.Column<string>(type: "varchar(255)", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    OrderId = table.Column<int>(type: "int", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_WaiterOrders", x => x.WaiterOrderId);
+                    table.ForeignKey(
+                        name: "FK_WaiterOrders_AspNetUsers_WaiterId",
+                        column: x => x.WaiterId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_WaiterOrders_Orders_OrderId",
+                        column: x => x.OrderId,
+                        principalTable: "Orders",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "rrrrrrrr-l0w6-hhhh-jf84-rrrrrrrr", "3d191124-af10-49a8-b8e6-d98a7c323e3d", "Waiter", "WAITER" });
+                values: new object[] { "rrrrrrrr-22b1-4479-j58g-rrrrrrrr", "af298360-3e58-418e-87e5-d833fddbf92f", "Admin", "ADMIN" });
+
+            migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[] { "rrrrrrrr-l0w6-hhhh-jf84-rrrrrrrr", "cbbca5f2-6932-488e-9691-33d7774488fa", "Waiter", "WAITER" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "z65dbe81-22b1-4479-j58g-d730ap050aa1", 0, "e0ca5199-11e2-4455-aaab-b92f35cd5ead", "admin@justasecond.com", true, false, null, "ADMIN@JUSTASECOND.COM", "ADMIN@JUSTASECOND.COM", "AQAAAAEAACcQAAAAEKrBaAX6bqaPTMKWJWlyMHO6zCEzoTGBLGFj8RAI1SdYDTqjSmQs4n1LBiboSdTLoQ==", null, false, "c471b3ee-a001-4ee2-ac28-0ec5b2bf42d9", false, "admin@justasecond.com" });
+                values: new object[] { "z65dbe81-22b1-4479-j58g-d730ap050aa1", 0, "847e98c6-da20-40f6-ad75-cb0300f31130", "admin@justasecond.com", true, false, null, "ADMIN@JUSTASECOND.COM", "ADMIN@JUSTASECOND.COM", "AQAAAAEAACcQAAAAEGe8UxftdCJUN5vWi4jm8GAJHbfm+t71OeU2Q6UHqdVwZHFBrvBTjUlLcTwMeI378w==", null, false, "defc4e8d-c149-4478-9795-73e7a41f632a", false, "admin@justasecond.com" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",
@@ -393,6 +397,11 @@ namespace JustASecond.DAL.Migrations
                 name: "IX_OrderPositions_ProductId",
                 table: "OrderPositions",
                 column: "ProductId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Orders_TableId",
+                table: "Orders",
+                column: "TableId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_WaiterCalls_TableId",
@@ -448,13 +457,13 @@ namespace JustASecond.DAL.Migrations
                 name: "Products");
 
             migrationBuilder.DropTable(
-                name: "Tables");
-
-            migrationBuilder.DropTable(
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
                 name: "Orders");
+
+            migrationBuilder.DropTable(
+                name: "Tables");
         }
     }
 }

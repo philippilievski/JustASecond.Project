@@ -78,7 +78,7 @@ else
         {
             _order.CreatedDate = DateTime.Now;
             unitOfWork.OrderRepo.AddOrder(_order);
-            _highestpositionnr = _order.OrderPositions.Where(x => x.Product == product).Max(x => x.PositionNr) + 1;
+            _highestpositionnr = _order.OrderPositions.Where(x => x.Product == product).Max(x => x.Position) + 1;
         }
         else
         {
@@ -89,7 +89,7 @@ else
         _order.OrderPositions.Add(new OrderPosition
             {
                 Product = product,
-                PositionNr = _highestpositionnr
+                Position = _highestpositionnr
             });
     }
 

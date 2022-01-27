@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JustASecond.DAL.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220120145259_deeznuts")]
-    partial class deeznuts
+    [Migration("20220127101342_changePriceType")]
+    partial class changePriceType
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -89,15 +89,15 @@ namespace JustASecond.DAL.Migrations
                         {
                             Id = "z65dbe81-22b1-4479-j58g-d730ap050aa1",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "9b54c91c-ee1a-430c-976c-0525817da136",
+                            ConcurrencyStamp = "3c3fc498-a160-401b-ad82-659c6bbbe75c",
                             Email = "admin@justasecond.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@JUSTASECOND.COM",
                             NormalizedUserName = "ADMIN@JUSTASECOND.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEAFy0I0r8ZbmhrUR9icYNLzb0NO94Hv1WZlDozwFGSf7/YA8LNoMny0XH/GHZYlbKA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEDj5VHN32v5z8Kzu1ch7UBfXEY826jkYiPzxXPXUtqMBg9FGsa9830yIrsyIMAjCxQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "4276a8cb-d5b0-4310-8c61-cfb62758bf09",
+                            SecurityStamp = "af5ae65a-3f82-4a31-b60c-178c9fbb7464",
                             TwoFactorEnabled = false,
                             UserName = "admin@justasecond.com"
                         });
@@ -105,20 +105,19 @@ namespace JustASecond.DAL.Migrations
 
             modelBuilder.Entity("JustASecond.DAL.Data.Models.Order", b =>
                 {
-                    b.Property<int?>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     b.Property<DateTime?>("CreatedDate")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<string>("Firstname")
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("Lastname")
-                        .HasColumnType("longtext");
+                    b.Property<int>("TableId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("TableId");
 
                     b.ToTable("Orders");
                 });
@@ -129,6 +128,9 @@ namespace JustASecond.DAL.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("Position")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Amount")
                         .HasColumnType("int");
 
                     b.Property<int?>("ProductId")
@@ -154,8 +156,8 @@ namespace JustASecond.DAL.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<string>("Price")
-                        .HasColumnType("longtext");
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(65,30)");
 
                     b.Property<string>("Title")
                         .HasColumnType("longtext");
@@ -265,14 +267,14 @@ namespace JustASecond.DAL.Migrations
                         new
                         {
                             Id = "rrrrrrrr-22b1-4479-j58g-rrrrrrrr",
-                            ConcurrencyStamp = "6cf38022-939e-481a-9f0f-8a4d8f6314b7",
+                            ConcurrencyStamp = "534cca46-46b4-44e7-89ce-c79f3ca098af",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "rrrrrrrr-l0w6-hhhh-jf84-rrrrrrrr",
-                            ConcurrencyStamp = "225a5be3-34b5-4d60-bfdf-264cc97df17d",
+                            ConcurrencyStamp = "843a8ac0-54b6-46df-89b6-2fa561433e36",
                             Name = "Waiter",
                             NormalizedName = "WAITER"
                         });
@@ -391,6 +393,17 @@ namespace JustASecond.DAL.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("JustASecond.DAL.Data.Models.Order", b =>
+                {
+                    b.HasOne("JustASecond.DAL.Data.Models.Table", "Table")
+                        .WithMany("Orders")
+                        .HasForeignKey("TableId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Table");
+                });
+
             modelBuilder.Entity("JustASecond.DAL.Data.Models.OrderPosition", b =>
                 {
                     b.HasOne("JustASecond.DAL.Data.Models.Order", "Order")
@@ -505,6 +518,11 @@ namespace JustASecond.DAL.Migrations
             modelBuilder.Entity("JustASecond.DAL.Data.Models.Product", b =>
                 {
                     b.Navigation("OrderPositions");
+                });
+
+            modelBuilder.Entity("JustASecond.DAL.Data.Models.Table", b =>
+                {
+                    b.Navigation("Orders");
                 });
 #pragma warning restore 612, 618
         }

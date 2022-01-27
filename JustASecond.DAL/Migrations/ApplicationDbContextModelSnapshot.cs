@@ -87,15 +87,15 @@ namespace JustASecond.DAL.Migrations
                         {
                             Id = "z65dbe81-22b1-4479-j58g-d730ap050aa1",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "bfed62c1-95af-4e3e-a6be-1e8df9affb2f",
+                            ConcurrencyStamp = "67680b87-62f8-4e06-be46-8a0d2ac552a5",
                             Email = "admin@justasecond.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@JUSTASECOND.COM",
                             NormalizedUserName = "ADMIN@JUSTASECOND.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEEfHQtOpZ+CCK+dyQuu5CMOPU14Yk5//taVaUNwtZwT/AbL8t0TLSSJK2Vhk8KBNYA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAENZeV6R9P3zOiNes8F4+CU3BKDuaZelk1k2pAQUOhsOBXRzRJ/fy1fqLs6Hxr8NAkg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "4a8d8b89-d91b-40d9-bfe3-489c698dc2de",
+                            SecurityStamp = "e569ace0-db4c-42c5-9fa8-3689f35d0a68",
                             TwoFactorEnabled = false,
                             UserName = "admin@justasecond.com"
                         });
@@ -128,6 +128,9 @@ namespace JustASecond.DAL.Migrations
                     b.Property<int>("Position")
                         .HasColumnType("int");
 
+                    b.Property<int>("Amount")
+                        .HasColumnType("int");
+
                     b.Property<int?>("ProductId")
                         .HasColumnType("int");
 
@@ -135,7 +138,7 @@ namespace JustASecond.DAL.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("OrderPositions", (string)null);
+                    b.ToTable("OrderPositions");
                 });
 
             modelBuilder.Entity("JustASecond.DAL.Data.Models.Product", b =>
@@ -151,8 +154,8 @@ namespace JustASecond.DAL.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<string>("Price")
-                        .HasColumnType("longtext");
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(13,2)");
 
                     b.Property<string>("Title")
                         .HasColumnType("longtext");
@@ -162,7 +165,7 @@ namespace JustASecond.DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Products", (string)null);
+                    b.ToTable("Products");
                 });
 
             modelBuilder.Entity("JustASecond.DAL.Data.Models.Table", b =>
@@ -176,7 +179,7 @@ namespace JustASecond.DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Tables", (string)null);
+                    b.ToTable("Tables");
                 });
 
             modelBuilder.Entity("JustASecond.DAL.Data.Models.WaiterCall", b =>
@@ -204,7 +207,7 @@ namespace JustASecond.DAL.Migrations
 
                     b.HasIndex("WaiterId");
 
-                    b.ToTable("WaiterCalls", (string)null);
+                    b.ToTable("WaiterCalls");
                 });
 
             modelBuilder.Entity("JustASecond.DAL.Data.Models.WaiterOrder", b =>
@@ -230,7 +233,7 @@ namespace JustASecond.DAL.Migrations
 
                     b.HasIndex("WaiterId");
 
-                    b.ToTable("WaiterOrders", (string)null);
+                    b.ToTable("WaiterOrders");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -262,14 +265,14 @@ namespace JustASecond.DAL.Migrations
                         new
                         {
                             Id = "rrrrrrrr-22b1-4479-j58g-rrrrrrrr",
-                            ConcurrencyStamp = "13c7f69b-a665-4e07-8536-27650bebe551",
+                            ConcurrencyStamp = "51c984a1-8579-4208-85a1-57de5b9fb75d",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "rrrrrrrr-l0w6-hhhh-jf84-rrrrrrrr",
-                            ConcurrencyStamp = "0b831b6c-e3d8-4133-a8af-c938d5f06c90",
+                            ConcurrencyStamp = "17970571-f314-4eaf-9850-fbdd7cc68b9c",
                             Name = "Waiter",
                             NormalizedName = "WAITER"
                         });
