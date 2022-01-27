@@ -1,10 +1,12 @@
 ﻿using JustASecond.DAL.Data.Models;
+using JustASecond.DAL.Data.ModelViews;
 using JustASecond.Web.Data.ModelViews;
 
 namespace JustASecond.DAL.Interfaces
 {
     public interface IOrderRepo
     {
+        Task<IEnumerable<OrderView>> GetAllOrders();
         Task AddOrder(Order order);
         Task RemoveOrder(Order order);
         Task<Order> GetOrder(int orderId);
