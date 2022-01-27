@@ -1,5 +1,6 @@
 ﻿using JustASecond.DAL.Data;
 using JustASecond.DAL.Data.Models;
+using JustASecond.DAL.Data.ModelViews;
 using JustASecond.DAL.Interfaces;
 using JustASecond.Web.Data.ModelViews;
 using Microsoft.EntityFrameworkCore;
@@ -18,6 +19,22 @@ namespace JustASecond.DAL.Repos
             }
 
             this.db = db;
+        }
+
+        public async Task<IEnumerable<OrderView>> GetAllOrders()
+        {
+            return await db.Orders!
+                .Select(x => new OrderView
+                {
+                    Id = x.Id,
+                    CreateDate = x.CreatedDate,
+                    Table = new TableView
+                    {
+                        Id = x.Table.Id,
+                        HasCalled = x.Table.HasCalled
+                    }
+                })
+                .ToListAsync();
         }
 
         public async Task AddOrder(Order order)

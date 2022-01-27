@@ -8,6 +8,7 @@
 @using JustASecond.Web.Data.ModelViews
 @using Microsoft.AspNetCore.Identity
 @using Microsoft.AspNetCore.Components.Authorization
+@using JustASecond.Web.Pages.Shared
 @inject NavigationManager Navigation
 @inject IUnitOfWork unitOfWork
 
@@ -25,46 +26,36 @@
         </div>
         <hr class="divider" />
 
+        <h3>Orders</h3>
+
+        @if (orders == null)
+        {
+            <Spinner></Spinner>
+            return;
+        }
+        else if (orders.Count() < 1)
+        {
+            <p>No orders found.</p>
+            return;
+        }
+
         <div>
             <table class="table">
                 <thead class="thead-light">
                     <tr>
-                        <th scope="col">Ordernumber</th>
-                        <th scope="col">Time</th>
-                        <th scope="col">Table</th>
-                        <th scope="col">Customer</th>
+                        <th>Date</th>
+                        <th>Table</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr @onclick="async () => await SetOrderPositions(1)">
-                        <th scope="row">1</th>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>Hallo</td>
-                    </tr>
-                    @if (currentOrderPositions != null)
+                    @foreach (var order in orders!)
                     {
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>#</th>>
-                                    <th>Product</th>
-                                    <th>Amount</th>
-                                    <th>Price per product</th>
-                                    <th>Total</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var orderPosition in currentOrderPositions)
-                                {
-                                    <tr>@orderPosition.Position</tr>
-                                    <tr>@orderPosition.Product.Title</tr>
-                                    <tr>@orderPosition.Amount</tr>
-                                    <tr>@orderPosition.Product.Price</tr>
-                                    <tr>@orderPosition.Total</tr>
-                                }
-                            </tbody>
-                        </table>
+                        <tr>
+                            <td>@order.CreateDate</td>
+                            <td>@order.Table?.Id</td>
+                            <td><button class="btn" @onclick="async () => await OpenOrderDetails(order.Id)">Order details</button></td>
+                        </tr>
                     }
                 </tbody>
             </table>
@@ -74,31 +65,35 @@
 </AuthorizeView>
 
 @code {
-    public static List<Table> tables;
-    private ICollection<OrderPositionView>? currentOrderPositions;
+    private IEnumerable<OrderPositionView>? currentOrderPositions;
     private OrderView? selectedOrder;
-    public static bool firstrendered = true;
+    private IEnumerable<OrderView>? orders;
+
+    public static bool FirstRendered { get; set; } = true;
+    public static List<Table>? Tables { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-        var principal = HttpContextAccessor.HttpContext.User;
+        var principal = HttpContextAccessor.HttpContext!.User;
         var loggedInUserId = principal.FindFirstValue(ClaimTypes.NameIdentifier);
         var user = await _userManager.FindByIdAsync(loggedInUserId);
 
-        if(!principal.Identity.IsAuthenticated)
+        if (!principal.Identity!.IsAuthenticated)
         {
             Navigation.NavigateTo("loginpage");
         }
 
-        if(firstrendered)
+        if (FirstRendered)
         {
-            firstrendered = false;
-            tables = (await unitOfWork.OrderRepo.GetTables()).ToList();
+            FirstRendered = false;
+            Tables = (await unitOfWork.OrderRepo.GetTables()).ToList();
         }
+
+        orders = await unitOfWork.OrderRepo.GetAllOrders();
     }
 
-    private async Task SetOrderPositions(int orderId)
+    private async Task OpenOrderDetails(int orderId)
     {
-        currentOrderPositions = (await unitOfWork.OrderRepo.GetAllPositionsFromOrder(orderId)).ToList();
+        Navigation.NavigateTo($"orderDetail/{orderId}");
     }
 }

@@ -3,6 +3,7 @@ using System;
 using JustASecond.DAL.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JustASecond.DAL.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220127080317_EditedOrders")]
+    partial class EditedOrders
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -135,7 +137,7 @@ namespace JustASecond.DAL.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("OrderPositions", (string)null);
+                    b.ToTable("OrderPositions");
                 });
 
             modelBuilder.Entity("JustASecond.DAL.Data.Models.Product", b =>
@@ -162,7 +164,7 @@ namespace JustASecond.DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Products", (string)null);
+                    b.ToTable("Products");
                 });
 
             modelBuilder.Entity("JustASecond.DAL.Data.Models.Table", b =>
@@ -176,7 +178,7 @@ namespace JustASecond.DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Tables", (string)null);
+                    b.ToTable("Tables");
                 });
 
             modelBuilder.Entity("JustASecond.DAL.Data.Models.WaiterCall", b =>
@@ -204,7 +206,7 @@ namespace JustASecond.DAL.Migrations
 
                     b.HasIndex("WaiterId");
 
-                    b.ToTable("WaiterCalls", (string)null);
+                    b.ToTable("WaiterCalls");
                 });
 
             modelBuilder.Entity("JustASecond.DAL.Data.Models.WaiterOrder", b =>
@@ -230,7 +232,7 @@ namespace JustASecond.DAL.Migrations
 
                     b.HasIndex("WaiterId");
 
-                    b.ToTable("WaiterOrders", (string)null);
+                    b.ToTable("WaiterOrders");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

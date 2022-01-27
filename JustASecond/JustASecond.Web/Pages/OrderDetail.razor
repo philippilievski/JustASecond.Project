@@ -1,0 +1,55 @@
+﻿@page "/orderDetail/{OrderId:int}"
+@using JustASecond.DAL.Interfaces
+@using JustASecond.DAL.Repos
+@using JustASecond.Web.Data.ModelViews
+@using JustASecond.Web.Pages.Shared;
+@inject IUnitOfWork unitOfWork
+
+<h3>Order Detail</h3>
+
+@if (orderPositions == null)
+{
+    <Spinner></Spinner>
+    return;
+}
+else if (orderPositions.Count() < 1)
+{
+    <p>No order positions found.</p>
+    return;
+}
+
+<table>
+    <thead>
+        <tr>
+            <th>#</th>>
+            <th>Product</th>
+            <th>Amount</th>
+            <th>Price per product</th>
+            <th>Total</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var orderPosition in orderPositions)
+        {
+            <tr>@orderPosition.Position</tr>
+            <tr>@orderPosition.Product.Title</tr>
+            <tr>@orderPosition.Amount</tr>
+            <tr>@orderPosition.Product.Price</tr>
+            <tr>@orderPosition.Total</tr>
+        }
+    </tbody>
+</table>
+
+@code {
+    private IEnumerable<OrderPositionView>? orderPositions;
+
+    [Parameter]
+    public int OrderId { get; set; }
+
+    protected async override Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+
+        orderPositions = await unitOfWork.OrderRepo.GetAllPositionsFromOrder(OrderId);
+    }
+}
