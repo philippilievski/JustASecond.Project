@@ -21,7 +21,7 @@ else if (orderPositions.Count() < 1)
 <table class="table table-striped">
     <thead>
         <tr>
-            <th>#</th>>
+            <th>#</th>
             <th>Product</th>
             <th>Amount</th>
             <th>Price per product</th>
@@ -31,11 +31,13 @@ else if (orderPositions.Count() < 1)
     <tbody>
         @foreach (var orderPosition in orderPositions)
         {
-            <tr>@orderPosition.Position</tr>
-            <tr>@orderPosition.Product.Title</tr>
-            <tr>@orderPosition.Amount</tr>
-            <tr>@orderPosition.Product.Price</tr>
-            <tr>@orderPosition.Total</tr>
+            <tr>
+                <td>@orderPosition.Position</td>
+                <td>@orderPosition.Product.Title</td>
+                <td>@orderPosition.Amount</td>
+                <td>@orderPosition.Product.Price</td>
+                <td>@orderPosition.Total</td>
+            </tr>
         }
     </tbody>
 </table>

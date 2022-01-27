@@ -87,15 +87,15 @@ namespace JustASecond.DAL.Migrations
                         {
                             Id = "z65dbe81-22b1-4479-j58g-d730ap050aa1",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "df50a7f3-b7dd-46c3-bfbe-20c77a134b60",
+                            ConcurrencyStamp = "67680b87-62f8-4e06-be46-8a0d2ac552a5",
                             Email = "admin@justasecond.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@JUSTASECOND.COM",
                             NormalizedUserName = "ADMIN@JUSTASECOND.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAED8c29OQb5nLQOKF2SRD4xXG58u5CqUQTcDjTxbrNt/4W6FH3TCixoDe3EiCAma9yA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAENZeV6R9P3zOiNes8F4+CU3BKDuaZelk1k2pAQUOhsOBXRzRJ/fy1fqLs6Hxr8NAkg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "7e4ca425-f659-47cf-8c74-ce1940c0de5f",
+                            SecurityStamp = "e569ace0-db4c-42c5-9fa8-3689f35d0a68",
                             TwoFactorEnabled = false,
                             UserName = "admin@justasecond.com"
                         });
@@ -154,8 +154,8 @@ namespace JustASecond.DAL.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<string>("Price")
-                        .HasColumnType("longtext");
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(13,2)");
 
                     b.Property<string>("Title")
                         .HasColumnType("longtext");
@@ -265,14 +265,14 @@ namespace JustASecond.DAL.Migrations
                         new
                         {
                             Id = "rrrrrrrr-22b1-4479-j58g-rrrrrrrr",
-                            ConcurrencyStamp = "d41f4e3c-f132-492f-bfea-871029987d60",
+                            ConcurrencyStamp = "51c984a1-8579-4208-85a1-57de5b9fb75d",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "rrrrrrrr-l0w6-hhhh-jf84-rrrrrrrr",
-                            ConcurrencyStamp = "5d5b7af1-2f60-4292-a1fc-5b8910fdc881",
+                            ConcurrencyStamp = "17970571-f314-4eaf-9850-fbdd7cc68b9c",
                             Name = "Waiter",
                             NormalizedName = "WAITER"
                         });
