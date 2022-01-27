@@ -112,7 +112,7 @@ namespace JustASecond.DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Orders");
+                    b.ToTable("Orders", (string)null);
                 });
 
             modelBuilder.Entity("JustASecond.DAL.Data.Models.OrderPosition", b =>
@@ -130,7 +130,7 @@ namespace JustASecond.DAL.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("OrderPositions");
+                    b.ToTable("OrderPositions", (string)null);
                 });
 
             modelBuilder.Entity("JustASecond.DAL.Data.Models.Product", b =>
@@ -157,7 +157,7 @@ namespace JustASecond.DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Products");
+                    b.ToTable("Products", (string)null);
                 });
 
             modelBuilder.Entity("JustASecond.DAL.Data.Models.Table", b =>
@@ -171,7 +171,7 @@ namespace JustASecond.DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Tables");
+                    b.ToTable("Tables", (string)null);
                 });
 
             modelBuilder.Entity("JustASecond.DAL.Data.Models.WaiterCall", b =>
@@ -199,7 +199,7 @@ namespace JustASecond.DAL.Migrations
 
                     b.HasIndex("WaiterId");
 
-                    b.ToTable("WaiterCalls");
+                    b.ToTable("WaiterCalls", (string)null);
                 });
 
             modelBuilder.Entity("JustASecond.DAL.Data.Models.WaiterOrder", b =>
@@ -225,7 +225,7 @@ namespace JustASecond.DAL.Migrations
 
                     b.HasIndex("WaiterId");
 
-                    b.ToTable("WaiterOrders");
+                    b.ToTable("WaiterOrders", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

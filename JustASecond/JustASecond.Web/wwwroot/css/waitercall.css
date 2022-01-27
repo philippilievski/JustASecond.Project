@@ -97,14 +97,22 @@ body {
     font-size: 12px;
 }
 
-.btn {
+.btn-bottom-navbar {
     margin: 20px;
     width: 30vw;
     background-color: #96C0E3;
     color: white;
     border-radius: 20px;
+    border-color: transparent;
+}
+/*
+    Onclick
+*/
+
+.btn-successfull {
+    transition: background-color 0.2s ease-in;
 }
 
-    .btn:hover {
-        background-color: #96C0E3;
+    .btn-successfull:focus {
+        background-color: #A0FFDA;
     }

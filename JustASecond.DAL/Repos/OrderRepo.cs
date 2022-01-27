@@ -141,9 +141,18 @@ namespace JustASecond.DAL.Repos
                 .Select(x => new OrderPositionView
                 {
                     OrderId = x.OrderId,
-                    Position = x.Position
+                    Position = x.PositionNr
                 })
                 .ToListAsync();
+        }
+
+        public async Task<int> GetHighestPositionFromOrderposition(Order order)
+        {
+            var highest = db.OrderPositions
+                            .Where(x => x.OrderId == order.Id)
+                            .MaxAsync(x => x.PositionNr);
+
+            return await highest;
         }
     }
 }
