@@ -8,7 +8,6 @@
         Task SaveChanges();
         ICustomerRepo CustomerRepo { get; }
         IWaiterRepo WaiterRepo { get; }
-        Task SaveChanges();
         Task Rollback();
     }
 }
