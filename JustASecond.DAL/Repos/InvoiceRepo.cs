@@ -1,4 +1,5 @@
-﻿using JustASecond.DAL.Interfaces;
+﻿using JustASecond.DAL.Data.Models;
+using JustASecond.DAL.Interfaces;
 using PdfSharpCore.Drawing;
 using PdfSharpCore.Pdf;
 
@@ -6,7 +7,7 @@ namespace JustASecond.DAL.Repos
 {
     public class InvoiceRepo : IInvoiceRepo
     {
-        public async Task CreateInvoicePDF()
+        public async Task CreateInvoicePDF(Order order, int invoinceNumber)
         {
             var document = new PdfDocument();
             var page = document.AddPage();
