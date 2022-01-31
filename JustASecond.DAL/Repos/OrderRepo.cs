@@ -206,6 +206,7 @@ namespace JustASecond.DAL.Repos
         public async Task<List<OrderPosition>> GetOrderPositionFromOrder(Order order)
         {
             var orderpositions = db.OrderPositions
+                                    .Include(x => x.Product)
                                     .Where(x => x.Order.Id == order.Id)
                                     .ToListAsync();
 

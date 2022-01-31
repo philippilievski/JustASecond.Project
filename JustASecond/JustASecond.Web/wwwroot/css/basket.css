@@ -2,22 +2,115 @@
 
 body {
     font-family: 'Open Sans', sans-serif;
+    background: rgb(237,244,250);
 }
 
 .page-container {
+    width: 100vw;
+    height: 100%;
     display: flex;
     flex-direction: column;
-    background: rgb(237,244,250);
-    background: linear-gradient(180deg, rgba(237,244,250,1) 75%, rgba(255,255,255,1) 100%);
 }
 
 .top-container {
     position: fixed;
     display: flex;
     flex-direction: column;
-    width:100vw;
+    width: 100vw;
     height: 20vw;
     justify-content: center;
     text-align: center;
 }
 
+.content-container {
+    margin-top: 8vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content:center;
+}
+
+.item-container {
+    margin: 2%;
+    background-color: white;
+    border-radius: 10px;
+    width: 90vw;
+    height: 20vw;
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+}
+
+    .item-container * {
+        margin: 2%;
+    }
+
+    .item-container img {
+        height: 75px;
+        width: auto;
+    }
+
+.description {
+    display: flex;
+    flex-direction: column;
+    width: 20vw;
+    justify-content: center;
+    text-align: center;
+}
+
+.price {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 10vw;
+}
+
+.amount-change {
+    display:flex;
+    margin: 0;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+    .amount-change * {
+        height: 4vh;
+
+    }
+
+    .amount-change input {
+        width: 20%;
+        border: 0px;
+        border-radius: 2px;
+    }
+
+.btn-change {
+    background-color: rgb(237,244,250);
+    border: 0px;
+    border-radius: 5px;
+    width: 20%;
+}
+
+.footer-container {
+    width: 100vw;
+    height: 20vw;
+    position: fixed;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn-place-order {
+    margin: 10%;
+    background-color: #96C0E3;
+    border: 0px;
+    border-radius: 7px;
+    width: 50vw;
+    color: white;
+    height: 5vh;
+}
+
+.divider {
+    height: 10vh;
+}

@@ -4,14 +4,41 @@
 
 <link rel="stylesheet" href="/css/basket.css" />
 
-<div class="page-container">
-    <div class="top-container">
-        <h3>Basket</h3>
+
+@if(Orderpositions != null)
+{
+    <div class="page-container">
+        <div class="top-container">
+            <h3>Basket</h3>
+        </div>
+        <div class="content-container">
+            @foreach(var item in Orderpositions)
+            {
+                @if(@item.Product != null)
+                {
+                <div class="item-container">
+                    <img src="/images/food/@item.Product.Image" />
+                    <div class="description">
+                        <p>@item.Product.Title</p>
+                    </div>
+                    <div class="price">
+                        <h4>@item.Product.Price</h4>
+                    </div>
+                    <div class="amount-change">
+                        <button class="btn-change">+</button>
+                        <input type="number" value="@item.Amount" />
+                        <button class="btn-change">-</button>
+                    </div>
+                </div>
+                }
+            }
+         </div>
+         <div class="divider"></div>
+         <div class="footer-container">
+             <button class="btn-place-order">Place order</button>
+         </div>
     </div>
-    <div class="content-container">
-        
-    </div>
-</div>
+}
 
 
 @code {
