@@ -52,7 +52,7 @@
                     @foreach (var order in orders!)
                     {
                         <tr>
-                            <td>@order.CreateDate</td>
+                            <td>@order.CreatedDate</td>
                             <td>@order.Table?.Id</td>
                             <td><button class="btn" @onclick="async () => await OpenOrderDetails(order.Id)">Order details</button></td>
                         </tr>
@@ -95,7 +95,8 @@
 {
     private IEnumerable<OrderPositionView> currentOrderPositions;
     private OrderView selectedOrder;
-    private IEnumerable<OrderView> orders;
+    private IEnumerable<Order> orders;
+    private IEnumerable<JustASecond.DAL.Data.Models.WaiterCall> waiterCalls;
 
     public static bool FirstRendered { get; set; } = true;
     public static List<Table> Tables { get; set; }
