@@ -61,13 +61,14 @@
     </Authorized>
 </AuthorizeView>
 
-@code {
-    private IEnumerable<OrderPositionView>? currentOrderPositions;
-    private OrderView? selectedOrder;
-    private IEnumerable<OrderView>? orders;
+@code
+{
+    private IEnumerable<OrderPositionView> currentOrderPositions;
+    private OrderView selectedOrder;
+    private IEnumerable<OrderView> orders;
 
     public static bool FirstRendered { get; set; } = true;
-    public static List<Table>? Tables { get; set; }
+    public static List<Table> Tables { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
