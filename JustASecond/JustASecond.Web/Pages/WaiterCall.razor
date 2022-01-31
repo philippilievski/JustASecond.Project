@@ -72,24 +72,12 @@ else
         _table = await unitOfWork.OrderRepo.GetTableByID(tableID);
         _products = (await unitOfWork.ProductRepo.GetAllProducts()).ToList();
         _customer = await unitOfWork.CustomerRepo.GetCustomerById(_customerId);
+        await InitializeOrder();
     }
 
     private async void AddToCart(Product product)
     {
-        // Order bereits vorhanden -> OrderPosition zum Vorhandenen hinzufügen
-        _order = await unitOfWork.CustomerRepo.GetOrderFromCustomer(_customer);
-
-        if (_order == null)
-        {
-            _order = new Order
-                {
-                    CreatedDate = DateTime.Now,
-                    Table = _table,
-                    Customer = _customer,
-                    OrderPositions = new List<OrderPosition>()
-                };
-            await unitOfWork.OrderRepo.AddOrder(_order);
-        }
+        await InitializeOrder();
 
         // Neue OrderPosition -> OrderPositionNr um 1 erhöhen
         _highestpositionnr = await unitOfWork.OrderRepo.GetHighestPositionFromOrderposition(_order) + 1;
@@ -114,7 +102,25 @@ else
         await unitOfWork.SaveChanges();
     }
 
-    private async void GoToBasket()
+    private async Task InitializeOrder()
+    {
+        // Order bereits vorhanden -> OrderPosition zum Vorhandenen hinzufügen
+        _order = await unitOfWork.CustomerRepo.GetOrderFromCustomer(_customer);
+
+        if (_order == null)
+        {
+            _order = new Order
+                {
+                    CreatedDate = DateTime.Now,
+                    Table = _table,
+                    Customer = _customer,
+                    OrderPositions = new List<OrderPosition>()
+                };
+            await unitOfWork.OrderRepo.AddOrder(_order);
+        }
+    }
+
+    private void GoToBasket()
     {
         if (_order != null)
         {
