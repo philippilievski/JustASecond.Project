@@ -5,6 +5,7 @@
         IOrderRepo OrderRepo { get; }
         IProductRepo ProductRepo { get; }
         ICustomerRepo CustomerRepo { get; }
+        IWaiterRepo WaiterRepo { get; }
         Task SaveChanges();
         Task Rollback();
     }

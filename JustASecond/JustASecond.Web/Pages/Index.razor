@@ -52,7 +52,7 @@
                     @foreach (var order in orders!)
                     {
                         <tr>
-                            <td>@order.CreateDate</td>
+                            <td>@order.CreatedDate</td>
                             <td>@order.Table?.Id</td>
                             <td><button class="btn" @onclick="async () => await OpenOrderDetails(order.Id)">Order details</button></td>
                         </tr>
@@ -60,13 +60,43 @@
                 </tbody>
             </table>
         </div>
+        <h3>Calls</h3>
+        @if(waiterCalls == null)
+        {
+            <h4>no calls...</h4>
+        }
+        else
+        {
+            <div>
+            <table class="table table-striped">
+                <thead class="thead-light">
+                    <tr>
+                        <th>Date</th>
+                        <th>Table</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in @waiterCalls!)
+                    {
+                        <tr>
+                            <td>@item.CalledAt</td>
+                            <td>@item.Table?.Id</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        }
     </Authorized>
 </AuthorizeView>
 
 @code {
     private IEnumerable<OrderPositionView>? currentOrderPositions;
     private OrderView? selectedOrder;
-    private IEnumerable<OrderView>? orders;
+    private IEnumerable<Order>? orders;
+
+    private IEnumerable<JustASecond.DAL.Data.Models.WaiterCall> waiterCalls;
 
     public static bool FirstRendered { get; set; } = true;
     public static List<Table>? Tables { get; set; }
@@ -88,7 +118,8 @@
             Tables = (await unitOfWork.OrderRepo.GetTables()).ToList();
         }
 
-        orders = await unitOfWork.OrderRepo.GetAllOrders();
+        orders = await unitOfWork.OrderRepo.GetAllSentOrders();
+        waiterCalls = await unitOfWork.WaiterRepo.GetWaiterCalls();
     }
 
     private async Task OpenOrderDetails(int orderId)
