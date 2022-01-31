@@ -18,12 +18,12 @@ namespace JustASecond.DAL.Repos
             this.db = db;
         }
 
-        public IOrderRepo OrderRepo { get => _orderRepo ?? new OrderRepo(_db); }
-        public IProductRepo ProductRepo { get => _productRepo ?? new ProductRepo(_db); }
+        public IOrderRepo OrderRepo { get => _orderRepo ?? new OrderRepo(db); }
+        public IProductRepo ProductRepo { get => _productRepo ?? new ProductRepo(db); }
         public IInvoiceRepo InvoiceRepo { get => _invoiceRepo ?? new InvoiceRepo(); }
         public ICustomerRepo CustomerRepo { get => _customerRepo ?? new CustomerRepo(db); }
 
-        public Task SaveChanges()
+        public Task Commit()
         {
             return db.SaveChangesAsync();
         }
