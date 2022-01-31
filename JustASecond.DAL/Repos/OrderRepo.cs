@@ -4,7 +4,6 @@ using JustASecond.DAL.Data.ModelViews;
 using JustASecond.DAL.Interfaces;
 using JustASecond.Web.Data.ModelViews;
 using Microsoft.EntityFrameworkCore;
-using System.Runtime.CompilerServices;
 
 namespace JustASecond.DAL.Repos
 {
@@ -203,7 +202,7 @@ namespace JustASecond.DAL.Repos
             return await table;
         }
 
-        public async Task<List<OrderPosition>> GetOrderPositionFromOrder(Order order)
+        public async Task<List<OrderPosition>> GetOrderPositionsFromOrder(Order order)
         {
             var orderpositions = db.OrderPositions!
                                     .Include(x => x.Order)
@@ -219,6 +218,22 @@ namespace JustASecond.DAL.Repos
                 .Include(x => x.Product)
                 .Where(x => x.OrderId == orderId && x.Product.Id == productId)
                 .FirstOrDefaultAsync();
+        }
+
+        public async Task RemoveOrderPosition(int orderId, int position)
+        {
+            var foundOrderPosition = await db.OrderPositions
+                .Where(x => x.OrderId == orderId && x.Position == position)
+                .FirstOrDefaultAsync();
+            db.OrderPositions.Remove(foundOrderPosition);
+        }
+
+        public async Task SetOrderPositionAmount(int orderId, int position, int amount)
+        {
+            (await db.OrderPositions
+                .Where(x => x.OrderId == orderId && x.Position == position)
+                .FirstOrDefaultAsync())
+                .Amount = amount;
         }
     }
 }
