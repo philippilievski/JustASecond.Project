@@ -32,6 +32,8 @@ body {
     position: fixed;
     bottom: 0;
     justify-content: space-between;
+    background: rgb(237,244,250);
+    background: linear-gradient(0deg, rgba(237,244,250,1) 10%, rgba(246,250,253,1) 42%, rgba(255,255,255,0.15732230392156865) 79%);
 }
 
 .menu-container {
@@ -99,6 +101,7 @@ body {
 
 .btn-bottom-navbar {
     margin: 20px;
+    height: 7vh;
     width: 30vw;
     background-color: #96C0E3;
     color: white;
