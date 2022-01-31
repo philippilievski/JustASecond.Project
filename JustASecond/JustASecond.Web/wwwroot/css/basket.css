@@ -1,0 +1,23 @@
+﻿@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@600&display=swap');
+
+body {
+    font-family: 'Open Sans', sans-serif;
+}
+
+.page-container {
+    display: flex;
+    flex-direction: column;
+    background: rgb(237,244,250);
+    background: linear-gradient(180deg, rgba(237,244,250,1) 75%, rgba(255,255,255,1) 100%);
+}
+
+.top-container {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    width:100vw;
+    height: 20vw;
+    justify-content: center;
+    text-align: center;
+}
+

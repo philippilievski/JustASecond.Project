@@ -1,5 +1,7 @@
 ﻿@page "/customerlogin/{tableID:int}"
+@using JustASecond.DAL.Interfaces
 @inject NavigationManager NavigationManager
+@inject IUnitOfWork unitOfWork
 
 <link rel="stylesheet" href="/css/customerlogin.css" />
 
@@ -26,7 +28,10 @@
     [Parameter]
     public int tableID { get; set; }
 
-    private void GoToMainpage()
+    private Customer _customer;
+    private Table _table;
+
+    private async void GoToMainpage()
     {
         if(_name == null)
         {
@@ -35,7 +40,17 @@
         }
         else
         {
-            NavigationManager.NavigateTo($"/waitercall/{tableID}/{_name}");
+            _table = await unitOfWork.OrderRepo.GetTableByID(tableID);
+
+            _customer = new Customer
+            {
+                Name = _name,
+                Table = _table
+            };
+            
+            await unitOfWork.CustomerRepo.AddCustomer(_customer);
+
+            NavigationManager.NavigateTo($"/waitercall/{tableID}/{_name}/{_customer.Id}");
         }
     }
 }

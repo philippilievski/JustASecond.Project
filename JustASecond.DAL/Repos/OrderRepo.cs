@@ -4,6 +4,7 @@ using JustASecond.DAL.Data.ModelViews;
 using JustASecond.DAL.Interfaces;
 using JustASecond.Web.Data.ModelViews;
 using Microsoft.EntityFrameworkCore;
+using System.Runtime.CompilerServices;
 
 namespace JustASecond.DAL.Repos
 {
@@ -170,13 +171,45 @@ namespace JustASecond.DAL.Repos
                 .ToListAsync();
         }
 
-        public async Task<int> GetHighestPositionFromOrderposition(Order order)
+        public async Task<int?> GetHighestPositionFromOrderposition(Order order)
         {
-            var highest = db.OrderPositions
+            int? highest = await db.OrderPositions
                             .Where(x => x.OrderId == order.Id)
-                            .MaxAsync(x => x.PositionNr);
+                            .MaxAsync(x => (int?)x.Position);
+
+            if(highest == null)
+            {
+                highest = 0;
+                return highest;
+            }
+
+            return highest;
+        }
+
+        public async Task<int> GetHighestOrderID()
+        {
+            var highest = db.Orders
+                            .MaxAsync(x => x.Id);
 
             return await highest;
+        }
+
+        public async Task<Table> GetTableByID(int tableid)
+        {
+            var table = db.Tables
+                            .Where(x => x.Id == tableid)
+                            .FirstAsync();
+
+            return await table;
+        }
+
+        public async Task<List<OrderPosition>> GetOrderPositionFromOrder(Order order)
+        {
+            var orderpositions = db.OrderPositions
+                                    .Where(x => x.Order.Id == order.Id)
+                                    .ToListAsync();
+
+            return await orderpositions;
         }
     }
 }

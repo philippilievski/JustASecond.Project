@@ -30,9 +30,10 @@ namespace JustASecond.DAL.Interfaces
 
         Task<IEnumerable<OrderPositionView>> GetAllPositionsFromOrder(int orderId);
 
-        Task<int> GetHighestPositionFromOrderposition(Order order);
+        Task<int?> GetHighestPositionFromOrderposition(Order order);
 
-        Task<int> GetHighestOrderID();
+        Task<Table> GetTableByID(int tableid);
 
+        Task<List<OrderPosition>> GetOrderPositionFromOrder(Order order);
     }
 }

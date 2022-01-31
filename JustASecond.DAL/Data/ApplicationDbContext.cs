@@ -18,6 +18,7 @@ namespace JustASecond.DAL.Data
         public DbSet<Table>? Tables { get; set; }
         public DbSet<WaiterOrder>? WaiterOrders { get; set; }
         public DbSet<WaiterCall>? WaiterCalls { get; set; }
+        public DbSet<Customer> Customers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -27,6 +28,7 @@ namespace JustASecond.DAL.Data
             builder.Entity<OrderPosition>()
                 .HasKey(x => new { x.OrderId, x.Position });
 
+            /*
             var user = new ApplicationUser()
             {
                 Id = "z65dbe81-22b1-4479-j58g-d730ap050aa1",
@@ -67,6 +69,7 @@ namespace JustASecond.DAL.Data
             };
 
             builder.Entity<IdentityUserRole<string>>().HasData(userRole1);
+            */
         }
     }
 }

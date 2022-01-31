@@ -1,0 +1,30 @@
+﻿@page "/basket/{OrderID:int}"
+@using JustASecond.DAL.Interfaces
+@inject IUnitOfWork unitOfWork
+
+<link rel="stylesheet" href="/css/basket.css" />
+
+<div class="page-container">
+    <div class="top-container">
+        <h3>Basket</h3>
+    </div>
+    <div class="content-container">
+        
+    </div>
+</div>
+
+
+@code {
+    [Parameter]
+    public int OrderID { get; set; }
+
+    private Order _order;
+
+    private List<OrderPosition> Orderpositions;
+
+    protected async override Task OnInitializedAsync()
+    {
+        _order = await unitOfWork.OrderRepo.GetOrder(OrderID);
+        Orderpositions = await unitOfWork.OrderRepo.GetOrderPositionFromOrder(_order);
+    }
+}

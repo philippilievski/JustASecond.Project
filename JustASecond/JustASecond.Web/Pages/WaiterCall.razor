@@ -1,13 +1,14 @@
 ﻿@using JustASecond.DAL.Data.Models
 @using JustASecond.DAL.Interfaces
 @inject IUnitOfWork unitOfWork
+@inject NavigationManager NavigationManager
 
 
-@page "/waitercall/{tableID:int}/{_name}"
+@page "/waitercall/{tableID:int}/{_name}/{_customerId:int}"
 
 <link rel="stylesheet" href="/css/waitercall.css" />
 
-@if(_products == null || _products.Count <= 0)
+@if (_products == null || _products.Count <= 0)
 {
     <p><em>No Products avaliable</em></p>
 }
@@ -18,7 +19,7 @@ else
             <h2>Hello, @_name!</h2>
         </div>
 
-        @foreach(var item in _products)
+        @foreach (var item in _products)
         {
             <div class="menu-container">
                 <div class="food-card">
@@ -37,7 +38,6 @@ else
             </div>
         }
         <div class="divider-container">
-
         </div>
 
         <div class="bottom-container">
@@ -52,54 +52,66 @@ else
     public int tableID { get; set; }
     [Parameter]
     public string _name { get; set; }
+    [Parameter]
+    public int _customerId { get; set; }
 
+    private Table _table;
     private List<Product> _products;
-    private Order _order;
+    private Order? _order;
+    private Customer _customer;
     private string _added;
-    private int _highestpositionnr;
+    private int? _highestpositionnr;
     private int _orderid;
 
     private string _btncolorstyle;
 
     protected async override Task OnInitializedAsync()
     {
+        _table = await unitOfWork.OrderRepo.GetTableByID(tableID);
         _products = (await unitOfWork.ProductRepo.GetAllProducts()).ToList();
-        _orderid = await GetHighestOrderID();
-        _order = new Order
-            {
-                CreatedDate = DateTime.Now,
-                Id = _orderid
-            };
-        await unitOfWork.OrderRepo.AddOrder(_order);
-        
+        _customer = await unitOfWork.CustomerRepo.GetCustomerById(_customerId);
     }
 
     private async void AddToCart(Product product)
     {
+        _order = await unitOfWork.CustomerRepo.GetOrderFromCustomer(_customer);
+
+        if (_order == null)
+        {
+            _order = new Order
+                {
+                    CreatedDate = DateTime.Now,
+                    Table = _table,
+                    Customer = _customer,
+                    OrderPositions = new List<OrderPosition>()
+                };
+            await unitOfWork.OrderRepo.AddOrder(_order);
+        }
+
         _highestpositionnr = await GetHighestPositionNR(_order);
+
         _order.OrderPositions.Add(new OrderPosition
             {
                 Amount = 1,
-                Position = _highestpositionnr,
-                Product = product
+                Position = (int)_highestpositionnr,
+                Product = product,
+                Order = _order
             });
-    }
-
-    private async Task<int> GetHighestOrderID()
-    {
-        var _highestorderid = await unitOfWork.OrderRepo.GetHighestOrderID() +1;
-        return _highestorderid;
+        await unitOfWork.SaveChanges();
     }
 
     private async Task<int> GetHighestPositionNR(Order _order)
     {
         _highestpositionnr = await unitOfWork.OrderRepo.GetHighestPositionFromOrderposition(_order) + 1;
-        return _highestpositionnr;
+        return _highestpositionnr ?? 1;
     }
 
     private async void GoToBasket()
     {
-        await unitOfWork.OrderRepo.AddOrder(_order);
+        if(_order != null)
+        {
+            NavigationManager.NavigateTo("/basket/" + _order.Id);
+        }
     }
 
     private void CallWaiter()

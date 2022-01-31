@@ -4,7 +4,8 @@
     {
         IOrderRepo OrderRepo { get; }
         IProductRepo ProductRepo { get; }
-        Task Commit();
+        ICustomerRepo CustomerRepo { get; }
+        Task SaveChanges();
         Task Rollback();
     }
 }
