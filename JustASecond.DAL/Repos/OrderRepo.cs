@@ -74,7 +74,7 @@ namespace JustASecond.DAL.Repos
         public async Task<IEnumerable<Table>> GetTables()
         {
             var query = from o in db.Tables
-                       select o;
+                        select o;
 
             return await query.ToListAsync();
         }
@@ -177,7 +177,7 @@ namespace JustASecond.DAL.Repos
                             .Where(x => x.OrderId == order.Id)
                             .MaxAsync(x => (int?)x.Position);
 
-            if(highest == null)
+            if (highest == null)
             {
                 highest = 0;
                 return highest;
@@ -196,7 +196,7 @@ namespace JustASecond.DAL.Repos
 
         public async Task<Table> GetTableByID(int tableid)
         {
-            var table = db.Tables
+            var table = db.Tables!
                             .Where(x => x.Id == tableid)
                             .FirstAsync();
 
@@ -205,11 +205,20 @@ namespace JustASecond.DAL.Repos
 
         public async Task<List<OrderPosition>> GetOrderPositionFromOrder(Order order)
         {
-            var orderpositions = db.OrderPositions
-                                    .Where(x => x.Order.Id == order.Id)
+            var orderpositions = db.OrderPositions!
+                                    .Include(x => x.Order)
+                                    .Where(x => x.Order!.Id == order.Id)
                                     .ToListAsync();
 
             return await orderpositions;
+        }
+
+        public async Task<OrderPosition> GetOrderPositionFromProductId(int orderId, int productId)
+        {
+            return await db.OrderPositions
+                .Include(x => x.Product)
+                .Where(x => x.OrderId == orderId && x.Product.Id == productId)
+                .FirstOrDefaultAsync();
         }
     }
 }

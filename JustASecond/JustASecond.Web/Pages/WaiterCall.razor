@@ -32,7 +32,7 @@ else
                     </div>
                     <div class="card-price">
                         <button @onclick="() => AddToCart(item)" class="@_btncolorstyle">Add to cart</button>
-                        <h3>@item.Price$</h3>
+                        <h3>@item.Price</h3>
                     </div>
                 </div>
             </div>
@@ -57,7 +57,7 @@ else
 
     private Table _table;
     private List<Product> _products;
-    private Order? _order;
+    private Order _order;
     private Customer _customer;
     private string _added;
     private int? _highestpositionnr;
@@ -74,6 +74,7 @@ else
 
     private async void AddToCart(Product product)
     {
+        // Order bereits vorhanden -> OrderPosition zum Vorhandenen hinzufügen
         _order = await unitOfWork.CustomerRepo.GetOrderFromCustomer(_customer);
 
         if (_order == null)
@@ -88,27 +89,32 @@ else
             await unitOfWork.OrderRepo.AddOrder(_order);
         }
 
-        _highestpositionnr = await GetHighestPositionNR(_order);
-
-        _order.OrderPositions.Add(new OrderPosition
-            {
-                Amount = 1,
-                Position = (int)_highestpositionnr,
-                Product = product,
-                Order = _order
-            });
-        await unitOfWork.SaveChanges();
-    }
-
-    private async Task<int> GetHighestPositionNR(Order _order)
-    {
+        // Neue OrderPosition -> OrderPositionNr um 1 erhöhen
         _highestpositionnr = await unitOfWork.OrderRepo.GetHighestPositionFromOrderposition(_order) + 1;
-        return _highestpositionnr ?? 1;
+
+        var foundOrderPosition = await unitOfWork.OrderRepo.GetOrderPositionFromProductId(_order.Id, product.Id);
+        if (foundOrderPosition != null)
+        {
+            // OrderPosition in Order bereits mit selben Produkt vorhanden -> Menge um 1 erhöhen
+            foundOrderPosition.Amount += 1;
+        }
+        else
+        {
+            _order.OrderPositions.Add(new OrderPosition
+                {
+                    Amount = 1,
+                    Position = (int)_highestpositionnr,
+                    Product = product,
+                    Order = _order
+                });
+        }
+
+        await unitOfWork.SaveChanges();
     }
 
     private async void GoToBasket()
     {
-        if(_order != null)
+        if (_order != null)
         {
             NavigationManager.NavigateTo("/basket/" + _order.Id);
         }

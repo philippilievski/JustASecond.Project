@@ -7,22 +7,22 @@ namespace JustASecond.DAL.Repos
 {
     public class ProductRepo : IProductRepo
     {
-        private ApplicationDbContext _db;
+        private ApplicationDbContext db;
 
         public ProductRepo(ApplicationDbContext db)
         {
-            _db = db;
+            this.db = db;
         }
 
         public async Task Add(Product product)
         {
-            await _db.AddAsync(product);
-            await _db.SaveChangesAsync();
+            await db.AddAsync(product);
+            await db.SaveChangesAsync();
         }
 
         public async Task<IEnumerable<Product>> GetAllProducts()
         {
-            var query = from p in _db.Products
+            var query = from p in db.Products
                         select p;
 
             return await query.ToListAsync();
@@ -30,14 +30,14 @@ namespace JustASecond.DAL.Repos
 
         public async Task Remove(Product product)
         {
-            _db.Remove(product);
-            await _db.SaveChangesAsync();
+            db.Remove(product);
+            await db.SaveChangesAsync();
         }
 
         public async Task Update(Product product)
         {
-            _db.Update(product);
-            await _db.SaveChangesAsync();
+            db.Update(product);
+            await db.SaveChangesAsync();
         }
     }
 }
