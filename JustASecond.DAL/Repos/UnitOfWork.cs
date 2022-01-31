@@ -11,6 +11,7 @@ namespace JustASecond.DAL.Repos
         private IOrderRepo _orderRepo;
         private IProductRepo _productRepo;
         private ICustomerRepo _customerRepo;
+        private IInvoiceRepo _invoiceRepo;
         private IWaiterRepo _waiterRepo;
 
 
@@ -21,6 +22,7 @@ namespace JustASecond.DAL.Repos
 
         public IOrderRepo OrderRepo { get => _orderRepo ?? new OrderRepo(db); }
         public IProductRepo ProductRepo { get => _productRepo ?? new ProductRepo(db); }
+        public IInvoiceRepo InvoiceRepo { get => _invoiceRepo ?? new InvoiceRepo(); }
         public ICustomerRepo CustomerRepo { get => _customerRepo ?? new CustomerRepo(db); }
 
         public IWaiterRepo WaiterRepo { get => _waiterRepo ?? new WaiterRepo(db); }
