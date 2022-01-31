@@ -41,7 +41,7 @@
 
         <div>
             <table class="table table-striped">
-                <thead class="thead-light">
+                <thead class="table-dark">
                     <tr>
                         <th>Date</th>
                         <th>Table</th>
@@ -69,7 +69,7 @@
         {
             <div>
             <table class="table table-striped">
-                <thead class="thead-light">
+                <thead class="table-dark">
                     <tr>
                         <th>Date</th>
                         <th>Table</th>
@@ -95,7 +95,8 @@
 {
     private IEnumerable<OrderPositionView> currentOrderPositions;
     private OrderView selectedOrder;
-    private IEnumerable<OrderView> orders;
+    private IEnumerable<Order> orders;
+    private IEnumerable<JustASecond.DAL.Data.Models.WaiterCall> waiterCalls;
 
     public static bool FirstRendered { get; set; } = true;
     public static List<Table> Tables { get; set; }
