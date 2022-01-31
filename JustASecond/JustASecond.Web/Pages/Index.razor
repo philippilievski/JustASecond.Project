@@ -52,7 +52,7 @@
                     @foreach (var order in orders!)
                     {
                         <tr>
-                            <td>@order.CreatedDate</td>
+                            <td>@order.CreateDate</td>
                             <td>@order.Table?.Id</td>
                             <td><button class="btn" @onclick="async () => await OpenOrderDetails(order.Id)">Order details</button></td>
                         </tr>
