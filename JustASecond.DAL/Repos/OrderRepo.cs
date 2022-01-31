@@ -235,5 +235,16 @@ namespace JustASecond.DAL.Repos
                 .FirstOrDefaultAsync())
                 .Amount = amount;
         }
+
+        public async Task SetOrderSent(Order order)
+        {
+            var orderupdated = db.Orders
+                            .Where(x => x.Id == order.Id)
+                            .FirstOrDefault();
+
+            orderupdated.Sent = true;
+            db.Update(orderupdated);
+            await db.SaveChangesAsync();
+        }
     }
 }

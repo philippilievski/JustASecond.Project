@@ -1,15 +1,17 @@
 ﻿@page "/basket/{OrderID:int}"
 @using JustASecond.DAL.Interfaces
 @inject IUnitOfWork unitOfWork
+@inject NavigationManager NavigationManager
 
 <link rel="stylesheet" href="/css/basket.css" />
 
 
-@if (Orderpositions != null)
+@if (Orderpositions != null && _order.Sent == false)
 {
     <div class="page-container">
+        <button class="btn-go-back"><i class="fa fa-arrow-left" aria-hidden="true"></i></button>
         <div class="top-container">
-            <h3>Basket</h3>
+            <h3>Cart</h3>
         </div>
         <div class="content-container">
             @foreach (var item in Orderpositions)
@@ -35,7 +37,7 @@
         </div>
         <div class="divider"></div>
         <div class="footer-container">
-            <button class="btn-place-order">Place order</button>
+            <button @onclick="PlaceOrder" class="btn-place-order">Place order</button>
         </div>
     </div>
 }
@@ -72,5 +74,11 @@
         }
         await unitOfWork.SaveChanges();
         Orderpositions = await unitOfWork.OrderRepo.GetOrderPositionsFromOrder(_order);
+    }
+
+    public async void PlaceOrder()
+    {
+        await unitOfWork.OrderRepo.SetOrderSent(_order);
+        NavigationManager.NavigateTo("/confirmation");
     }
 }
