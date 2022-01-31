@@ -39,27 +39,25 @@
             return;
         }
 
-        <div>
-            <table class="table table-striped">
-                <thead class="thead-light">
+        <table class="table table-responsive table-striped">
+            <thead class="table-dark">
+                <tr>
+                    <th>Date</th>
+                    <th>Table</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var order in orders!)
+                {
                     <tr>
-                        <th>Date</th>
-                        <th>Table</th>
-                        <th></th>
+                        <td>@order.CreateDate</td>
+                        <td>@order.Table?.Id</td>
+                        <td><button class="btn" @onclick="async () => await OpenOrderDetails(order.Id)">Order details</button></td>
                     </tr>
-                </thead>
-                <tbody>
-                    @foreach (var order in orders!)
-                    {
-                        <tr>
-                            <td>@order.CreateDate</td>
-                            <td>@order.Table?.Id</td>
-                            <td><button class="btn" @onclick="async () => await OpenOrderDetails(order.Id)">Order details</button></td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        </div>
+                }
+            </tbody>
+        </table>
     </Authorized>
 </AuthorizeView>
 

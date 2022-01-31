@@ -18,8 +18,8 @@ else if (orderPositions.Count() < 1)
     return;
 }
 
-<table class="table table-striped">
-    <thead>
+<table class="table table-responsive table-striped">
+    <thead class="table-dark">
         <tr>
             <th>#</th>
             <th>Product</th>
@@ -29,15 +29,19 @@ else if (orderPositions.Count() < 1)
         </tr>
     </thead>
     <tbody>
-        @foreach (var orderPosition in orderPositions)
-        {
-            <tr>
-                <td>@orderPosition.Position</td>
-                <td>@orderPosition.Product.Title</td>
-                <td>@orderPosition.Amount</td>
-                <td>@orderPosition.Product.Price</td>
-                <td>@orderPosition.Total</td>
-            </tr>
+        @{
+            int orderPositionDisplay = 0;
+            foreach (var orderPosition in orderPositions)
+            {
+                orderPositionDisplay++;
+                <tr>
+                    <td>@orderPositionDisplay</td>
+                    <td>@orderPosition.Product.Title</td>
+                    <td>@orderPosition.Amount</td>
+                    <td>@orderPosition.Product.Price</td>
+                    <td>@orderPosition.Total</td>
+                </tr>
+            }
         }
     </tbody>
 </table>
