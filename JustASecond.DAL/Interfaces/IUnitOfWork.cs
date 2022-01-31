@@ -4,8 +4,10 @@
     {
         IOrderRepo OrderRepo { get; }
         IProductRepo ProductRepo { get; }
-        ICustomerRepo CustomerRepo { get; }
+        IInvoiceRepo InvoiceRepo { get; }
         Task SaveChanges();
+        ICustomerRepo CustomerRepo { get; }
+        IWaiterRepo WaiterRepo { get; }
         Task Rollback();
     }
 }

@@ -37,6 +37,13 @@ namespace JustASecond.DAL.Repos
                 .ToListAsync();
         }
 
+        public async Task<IEnumerable<Order>> GetAllSentOrders()
+        {
+            return await db.Orders!
+                .Where(x => x.Sent == true)
+                .ToArrayAsync();
+        }
+
         public async Task AddOrder(Order order)
         {
             await db.Orders!.AddAsync(order);

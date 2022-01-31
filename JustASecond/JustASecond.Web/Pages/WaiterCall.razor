@@ -63,6 +63,8 @@ else
     private int? _highestpositionnr;
     private int _orderid;
 
+    private JustASecond.DAL.Data.Models.WaiterCall _waiterCall;
+
     private string _btncolorstyle;
 
     protected async override Task OnInitializedAsync()
@@ -126,9 +128,16 @@ else
         }
     }
 
-    private void CallWaiter()
+    private async void CallWaiter()
     {
-        //Index.tables[Index.tables.FindIndex(t => t.Id == tableID)].HasCalled = true;
+        _waiterCall = new JustASecond.DAL.Data.Models.WaiterCall
+            {
+                CalledAt = DateTime.Now,
+                Table = _table
+            };
+        await unitOfWork.WaiterRepo.AddWaiterCall(_waiterCall);
+        await unitOfWork.SaveChanges();
+
         _btncolorstyle = "btn-successfull";
     }
 }
