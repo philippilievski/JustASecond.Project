@@ -1,42 +1,44 @@
 ﻿@page "/basket/{OrderID:int}"
 @using JustASecond.DAL.Interfaces
 @inject IUnitOfWork unitOfWork
+@inject NavigationManager NavigationManager
 
 <link rel="stylesheet" href="/css/basket.css" />
 
 
-@if(Orderpositions != null)
+@if (Orderpositions != null && _order.Sent == false)
 {
     <div class="page-container">
+        <button class="btn-go-back"><i class="fa fa-arrow-left" aria-hidden="true"></i></button>
         <div class="top-container">
-            <h3>Basket</h3>
+            <h3>Cart</h3>
         </div>
         <div class="content-container">
-            @foreach(var item in Orderpositions)
+            @foreach (var item in Orderpositions)
             {
-                @if(@item.Product != null)
+                @if (@item.Product != null)
                 {
-                <div class="item-container">
-                    <img src="/images/food/@item.Product.Image" />
-                    <div class="description">
-                        <p>@item.Product.Title</p>
+                    <div class="item-container">
+                        <img src="/images/food/@item.Product.Image" />
+                        <div class="description">
+                            <p>@item.Product.Title</p>
+                        </div>
+                        <div class="price">
+                            <h4>@item.Product.Price</h4>
+                        </div>
+                        <div class="amount-change">
+                            <button class="btn-change">+</button>
+                            <input type="number" value="@item.Amount" />
+                            <button class="btn-change">-</button>
+                        </div>
                     </div>
-                    <div class="price">
-                        <h4>@item.Product.Price</h4>
-                    </div>
-                    <div class="amount-change">
-                        <button class="btn-change">+</button>
-                        <input type="number" value="@item.Amount" />
-                        <button class="btn-change">-</button>
-                    </div>
-                </div>
                 }
             }
-         </div>
-         <div class="divider"></div>
-         <div class="footer-container">
-             <button class="btn-place-order">Place order</button>
-         </div>
+        </div>
+        <div class="divider"></div>
+        <div class="footer-container">
+            <button @onclick="PlaceOrder" class="btn-place-order">Place order</button>
+        </div>
     </div>
 }
 
@@ -53,5 +55,11 @@
     {
         _order = await unitOfWork.OrderRepo.GetOrder(OrderID);
         Orderpositions = await unitOfWork.OrderRepo.GetOrderPositionFromOrder(_order);
+    }
+
+    public async void PlaceOrder()
+    {
+        await unitOfWork.OrderRepo.SetOrderSent(_order);
+        NavigationManager.NavigateTo("/confirmation");
     }
 }

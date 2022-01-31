@@ -1,0 +1,28 @@
+﻿@page "/confirmation"
+@inject NavigationManager NavigationManager;
+
+<link rel="stylesheet" href="/css/basket.css" />
+
+
+<div class="thankyou">
+    <h3>Thank you</h3>
+    <p>you will return shortly</p>
+</div>
+
+@code {
+    int counter = 1;
+    private System.Timers.Timer aTimer;
+
+    protected override void OnInitialized()
+    {
+        aTimer = new System.Timers.Timer(1000);
+        aTimer.Elapsed += ChangePage;
+        aTimer.Enabled = true;
+    }
+
+    private void ChangePage(Object source, System.Timers.ElapsedEventArgs e)
+    {
+        
+    }
+
+}

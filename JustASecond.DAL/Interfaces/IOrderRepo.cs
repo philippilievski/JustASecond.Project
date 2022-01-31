@@ -36,5 +36,8 @@ namespace JustASecond.DAL.Interfaces
 
         Task<List<OrderPosition>> GetOrderPositionFromOrder(Order order);
         Task<OrderPosition> GetOrderPositionFromProductId(int orderId, int productId);
+
+        Task SetOrderSent(Order order);
+
     }
 }

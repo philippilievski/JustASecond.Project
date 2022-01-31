@@ -220,5 +220,16 @@ namespace JustASecond.DAL.Repos
                 .Where(x => x.OrderId == orderId && x.Product.Id == productId)
                 .FirstOrDefaultAsync();
         }
+
+        public async Task SetOrderSent(Order order)
+        {
+            var orderupdated = db.Orders
+                            .Where(x => x.Id == order.Id)
+                            .FirstOrDefault();
+
+            orderupdated.Sent = true;
+            db.Update(orderupdated);
+            await db.SaveChangesAsync();
+        }
     }
 }
