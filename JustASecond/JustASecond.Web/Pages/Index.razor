@@ -54,7 +54,7 @@
                         <tr>
                             <td>@order.CreatedDate</td>
                             <td>@order.Table?.Id</td>
-                            <td><button class="btn" @onclick="async () => await OpenOrderDetails(order.Id)">Order details</button></td>
+                            <td><button class="btn" @onclick="() => OpenOrderDetails(order.Id)">Order details</button></td>
                         </tr>
                     }
                 </tbody>
@@ -77,7 +77,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var item in @waiterCalls!)
+                    @foreach (var item in waiterCalls!)
                     {
                         <tr>
                             <td>@item.CalledAt</td>
@@ -122,7 +122,7 @@
         waiterCalls = await unitOfWork.WaiterRepo.GetWaiterCalls();
     }
 
-    private async Task OpenOrderDetails(int orderId)
+    private void OpenOrderDetails(int orderId)
     {
         Navigation.NavigateTo($"orderDetail/{orderId}");
     }
