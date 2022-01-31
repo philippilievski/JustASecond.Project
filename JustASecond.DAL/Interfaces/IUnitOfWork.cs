@@ -5,7 +5,7 @@
         IOrderRepo OrderRepo { get; }
         IProductRepo ProductRepo { get; }
         IInvoiceRepo InvoiceRepo { get; }
-        Task Commit();
+        Task SaveChanges();
         ICustomerRepo CustomerRepo { get; }
         Task Rollback();
     }

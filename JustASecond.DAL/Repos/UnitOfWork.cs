@@ -23,7 +23,7 @@ namespace JustASecond.DAL.Repos
         public IInvoiceRepo InvoiceRepo { get => _invoiceRepo ?? new InvoiceRepo(); }
         public ICustomerRepo CustomerRepo { get => _customerRepo ?? new CustomerRepo(db); }
 
-        public Task Commit()
+        public Task SaveChanges()
         {
             return db.SaveChangesAsync();
         }
