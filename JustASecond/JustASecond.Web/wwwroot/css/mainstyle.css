@@ -34,6 +34,16 @@ a:focus {
     background-color: #EDF4FA;
 }
 
+.order-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+    .order-container:nth-child(2n) {
+        background-color: #EDF4FA;
+    }
+
 /*
     .entry-definitions-container {
         display: flex;

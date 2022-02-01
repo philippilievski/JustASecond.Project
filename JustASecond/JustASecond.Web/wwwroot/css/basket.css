@@ -111,6 +111,7 @@ body {
 
 .btn-place-order {
     margin: 10%;
+    margin-bottom: 10vh;
     background-color: #96C0E3;
     border: 0px;
     border-radius: 7px;
