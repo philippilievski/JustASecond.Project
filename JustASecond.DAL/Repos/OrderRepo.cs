@@ -252,7 +252,6 @@ namespace JustASecond.DAL.Repos
 
             orderupdated.Sent = true;
             db.Update(orderupdated);
-            await db.SaveChangesAsync();
         }
     }
 }

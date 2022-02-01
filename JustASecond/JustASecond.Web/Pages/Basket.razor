@@ -58,7 +58,6 @@
     private async Task RaiseOrderPositionAmount(int orderId, int position, int amount)
     {
         await unitOfWork.OrderRepo.SetOrderPositionAmount(orderId, position, amount + 1);
-        await unitOfWork.SaveChanges();
     }
 
     private async Task LowerOrderPositionAmount(int orderId, int position, int amount)
@@ -66,18 +65,19 @@
         if (amount <= 1)
         {
             await unitOfWork.OrderRepo.RemoveOrderPosition(orderId, position);
+            await unitOfWork.SaveChanges();
         }
         else
         {
             await unitOfWork.OrderRepo.SetOrderPositionAmount(orderId, position, amount - 1);
         }
-        await unitOfWork.SaveChanges();
         Orderpositions = await unitOfWork.OrderRepo.GetOrderPositionsFromOrder(_order);
     }
 
     public async void PlaceOrder()
     {
         await unitOfWork.OrderRepo.SetOrderSent(_order);
+        await unitOfWork.SaveChanges();
         NavigationManager.NavigateTo("/confirmation");
     }
 }
