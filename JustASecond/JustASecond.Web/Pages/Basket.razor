@@ -65,6 +65,7 @@
         if (amount <= 1)
         {
             await unitOfWork.OrderRepo.RemoveOrderPosition(orderId, position);
+            await unitOfWork.SaveChanges();
         }
         else
         {
