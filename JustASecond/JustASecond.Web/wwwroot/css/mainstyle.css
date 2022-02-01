@@ -34,11 +34,44 @@ a:focus {
     background-color: #EDF4FA;
 }
 
+.header {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+}
+
+.order-container-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+    .order-container-header p {
+        font-size: 20px;
+    }
+
+    .order-container-header > * {
+        margin: 2%;
+    }
+
+
 .order-container {
     display: flex;
+    height: 8vh;
     justify-content: space-between;
     align-items: center;
 }
+
+    .order-container button {
+        height: 5vh;
+        border: 0px;
+        border-radius:10px;
+        background-color: #96C0E3;
+        color: white;
+    }
+
+    .order-container > * {
+        margin: 2%;
+    }
 
     .order-container:nth-child(2n) {
         background-color: #EDF4FA;

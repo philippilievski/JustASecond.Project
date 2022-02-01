@@ -16,6 +16,7 @@
 
 <AuthorizeView>
     <Authorized>
+
         <div class="topnav">
             <a href="#">Orders</a>
             <a href="#">Tables</a>
@@ -26,7 +27,9 @@
         </div>
         <hr class="divider" />
 
-        <h3>Orders</h3>
+        <div class="header">
+            <h3>Orders</h3>
+        </div>
 
         @if (orders == null)
         {
@@ -38,8 +41,11 @@
             <p>No orders found.</p>
             return;
         }
-
-
+        <div class="order-container-header">
+            <p>Time</p>
+            <p>Table</p>
+            <p>Details</p>
+        </div>
         @foreach(var item in orders!)
         {
             <div class="order-container">
@@ -47,32 +53,13 @@
                 <hr>
                 <p>@item.Table.Id</p>
                 <hr>
-                <button>Orderdetails</button>
+                <button @onclick="() => OpenOrderDetails(item.Id)">Orderdetails</button>
             </div>
         }
 
-        <div>
-            <table class="table table-striped">
-                <thead class="table-dark">
-                    <tr>
-                        <th>Date</th>
-                        <th>Table</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var order in orders!)
-                    {
-                        <tr>
-                            <td>@order.CreatedDate</td>
-                            <td>@order.Table?.Id</td>
-                            <td><button class="btn" @onclick="() => OpenOrderDetails(order.Id)">Order details</button></td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
+        <div class="header">
+            <h3>Calls</h3>
         </div>
-        <h3>Calls</h3>
         @if(waiterCalls == null)
         {
             <h4>no calls...</h4>
@@ -85,7 +72,6 @@
                     <tr>
                         <th>Date</th>
                         <th>Table</th>
-                        <th></th>
                     </tr>
                 </thead>
                 <tbody>

@@ -14,10 +14,10 @@ body {
 }
 
 .top-container {
+    height: 10vh;
     display: flex;
-    flex-direction: column;
-    text-align: center;
-    margin-top: 6vh;
+    justify-content: center;
+    align-items: center;
 }
 
 .divider-container {
@@ -73,23 +73,26 @@ body {
 
 .card-price {
     width: 75vw;
-    margin: 5%;
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
 }
 
     .card-price h3 {
-        margin-left: auto;
-        margin-right: 10vw;
+        margin-right: 10%;
     }
 
     .card-price button {
         width: 30vw;
+        height: 4vh;
         background-color: #96C0E3;
         color: white;
         border: 0px;
         border-radius: 20px;
         transition: 0.2s;
+        -webkit-transition-duration: 0.2s; /* Safari */
+        margin: 5%;
     }
 
         .card-price button:active {
