@@ -106,7 +106,7 @@ else
     private async Task InitializeOrder()
     {
         // Order bereits vorhanden -> OrderPosition zum Vorhandenen hinzufügen
-        _order = await unitOfWork.CustomerRepo.GetOrderFromCustomer(_customer);
+        _order = await unitOfWork.CustomerRepo.GetPendingOrderFromCustomer(_customer);
 
         if (_order == null)
         {
@@ -125,7 +125,7 @@ else
     {
         if (_order != null)
         {
-            NavigationManager.NavigateTo("/basket/" + _order.Id);
+            NavigationManager.NavigateTo($"/basket/{_order.Id}/{tableID}/{_name}/{_customerId}");
         }
     }
 

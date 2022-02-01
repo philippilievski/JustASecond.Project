@@ -246,9 +246,9 @@ namespace JustASecond.DAL.Repos
 
         public async Task SetOrderSent(Order order)
         {
-            var orderupdated = db.Orders
+            var orderupdated = await db.Orders
                             .Where(x => x.Id == order.Id)
-                            .FirstOrDefault();
+                            .FirstOrDefaultAsync();
 
             orderupdated.Sent = true;
             db.Update(orderupdated);
