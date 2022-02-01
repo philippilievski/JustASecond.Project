@@ -5,7 +5,12 @@
 @using JustASecond.Web.Pages.Shared;
 @inject IUnitOfWork unitOfWork
 
-<h3>Order Detail</h3>
+<link rel="stylesheet" href="/css/mainstyle.css">
+
+<div class="header">
+    <h3>Order Detail</h3>
+</div>
+<hr class="divider"/>
 
 @if (orderPositions == null)
 {
@@ -18,33 +23,31 @@ else if (orderPositions.Count() < 1)
     return;
 }
 
-<table class="table table-responsive table-striped">
-    <thead class="table-dark">
-        <tr>
-            <th>#</th>
-            <th>Product</th>
-            <th>Amount</th>
-            <th>Price per product</th>
-            <th>Total</th>
-        </tr>
-    </thead>
-    <tbody>
-        @{
-            int orderPositionDisplay = 0;
-            foreach (var orderPosition in orderPositions)
-            {
-                orderPositionDisplay++;
-                <tr>
-                    <td>@orderPositionDisplay</td>
-                    <td>@orderPosition.Product.Title</td>
-                    <td>@orderPosition.Amount</td>
-                    <td>@orderPosition.Product.Price</td>
-                    <td>@orderPosition.Total</td>
-                </tr>
-            }
-        }
-    </tbody>
-</table>
+<div class="order-container-header">
+    <p>#</p>
+    <p>Product</p>
+    <p>Amount</p>
+    <p>Price</p>
+    <p>Total</p>
+</div>
+@{
+    int orderPositionDisplay = 0;
+    @foreach(var item in orderPositions)
+    {
+        orderPositionDisplay++;
+        <div class="order-container">
+            <p>@orderPositionDisplay</p>
+            <p>@item.Product.Title</p>
+            <p>@item.Amount</p>
+            <p>@item.Product.Price</p>
+            <p>@item.Total</p>
+        </div>
+    }
+}
+
+<div class="complete-order-container">
+    <button>Complete</button>
+</div>
 
 @code {
     private IEnumerable<OrderPositionView> orderPositions;

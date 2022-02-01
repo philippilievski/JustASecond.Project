@@ -30,6 +30,7 @@
         <div class="header">
             <h3>Orders</h3>
         </div>
+        <hr class="divider"/>
 
         @if (orders == null)
         {
@@ -57,34 +58,30 @@
             </div>
         }
 
+        
         <div class="header">
             <h3>Calls</h3>
         </div>
+        <hr class="divider"/>
+
         @if(waiterCalls == null)
         {
             <h4>no calls...</h4>
         }
         else
         {
-            <div>
-            <table class="table table-striped">
-                <thead class="table-dark">
-                    <tr>
-                        <th>Date</th>
-                        <th>Table</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in waiterCalls!)
-                    {
-                        <tr>
-                            <td>@item.CalledAt</td>
-                            <td>@item.Table?.Id</td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        </div>
+            <div class="order-container-header">
+                <p>Time</p>
+                <p>Table</p>
+            </div>
+            @foreach(var item in waiterCalls!)
+            {
+                <div class="order-container">
+                    <p>@item.CalledAt</p>
+                    <hr>
+                    <p>@item.Table.Id</p>
+                </div>
+            }
         }
     </Authorized>
 </AuthorizeView>

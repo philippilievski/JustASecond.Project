@@ -214,6 +214,7 @@ namespace JustASecond.DAL.Repos
         {
             var orderpositions = db.OrderPositions!
                                     .Include(x => x.Order)
+                                    .Include(x => x.Product)
                                     .Where(x => x.Order!.Id == order.Id)
                                     .ToListAsync();
 
