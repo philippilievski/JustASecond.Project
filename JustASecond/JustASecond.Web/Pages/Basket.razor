@@ -1,7 +1,7 @@
-﻿@page "/basket/{OrderID:int}"
+﻿@page "/basket/{OrderId:int}/{TableId:int}/{CustomerName}/{CustomerId:int}"
 @using JustASecond.DAL.Interfaces
 @inject IUnitOfWork unitOfWork
-@inject NavigationManager NavigationManager
+@inject NavigationManager navigationManager
 
 <link rel="stylesheet" href="/css/basket.css" />
 
@@ -43,15 +43,20 @@
 
 @code {
     [Parameter]
-    public int OrderID { get; set; }
+    public int OrderId { get; set; }
+    [Parameter]
+    public int TableId { get; set; }
+    [Parameter]
+    public int CustomerId { get; set; }
+    [Parameter]
+    public string CustomerName { get; set; }
 
     private Order _order;
-
     private List<OrderPosition> Orderpositions;
 
     protected async override Task OnInitializedAsync()
     {
-        _order = await unitOfWork.OrderRepo.GetOrder(OrderID);
+        _order = await unitOfWork.OrderRepo.GetOrder(OrderId);
         Orderpositions = await unitOfWork.OrderRepo.GetOrderPositionsFromOrder(_order);
     }
 
@@ -78,6 +83,6 @@
     {
         await unitOfWork.OrderRepo.SetOrderSent(_order);
         await unitOfWork.SaveChanges();
-        NavigationManager.NavigateTo("/confirmation");
+        navigationManager.NavigateTo($"/confirmation/{TableId}/{CustomerName}/{CustomerId}");
     }
 }

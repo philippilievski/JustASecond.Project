@@ -12,6 +12,6 @@ namespace JustASecond.DAL.Interfaces
         Task AddCustomer(Customer customer);
         Task<Customer> GetCustomerById(int customerid);
         Task<List<Customer>> GetAllCustomers();
-        Task<Order> GetOrderFromCustomer(Customer customer);
+        Task<Order> GetPendingOrderFromCustomer(Customer customer);
     }
 }

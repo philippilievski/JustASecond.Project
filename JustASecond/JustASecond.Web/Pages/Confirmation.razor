@@ -1,5 +1,5 @@
-﻿@page "/confirmation"
-@inject NavigationManager NavigationManager;
+﻿@page "/confirmation/{TableId:int}/{CustomerName}/{CustomerId:int}"
+@inject NavigationManager navigationManager;
 
 <link rel="stylesheet" href="/css/basket.css" />
 
@@ -13,16 +13,23 @@
     int counter = 1;
     private System.Timers.Timer aTimer;
 
+    [Parameter]
+    public int TableId { get; set; }
+    [Parameter]
+    public int CustomerId { get; set; }
+    [Parameter]
+    public string CustomerName { get; set; }
+
     protected override void OnInitialized()
     {
-        aTimer = new System.Timers.Timer(1000);
+        aTimer = new System.Timers.Timer(3000);
         aTimer.Elapsed += ChangePage;
         aTimer.Enabled = true;
     }
 
     private void ChangePage(Object source, System.Timers.ElapsedEventArgs e)
     {
-        
+        navigationManager.NavigateTo($"/waitercall/{TableId}/{CustomerName}/{CustomerId}");
+        aTimer.Enabled = false;
     }
-
 }

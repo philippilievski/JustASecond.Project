@@ -41,7 +41,7 @@ namespace JustASecond.DAL.Repos
             return await db.Customers.Where(x => x.Id == customerid).FirstAsync();
         }
 
-        public async Task<Order> GetOrderFromCustomer(Customer customer)
+        public async Task<Order> GetPendingOrderFromCustomer(Customer customer)
         {
             var order = db.Orders
                             .Include(x=> x.OrderPositions)
