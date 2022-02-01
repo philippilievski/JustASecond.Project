@@ -12,7 +12,7 @@ values
 
 insert into Customers(Id, Name, TableId)
 values
-(1, 'PhilipChillievski', 1);
+(1, 'PhilippChillievski', 1);
 
 insert into Orders(Id, CreatedDate, TableId, CustomerId)
 values

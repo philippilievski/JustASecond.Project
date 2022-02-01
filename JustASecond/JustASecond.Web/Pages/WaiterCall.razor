@@ -1,5 +1,6 @@
 ﻿@using JustASecond.DAL.Data.Models
 @using JustASecond.DAL.Interfaces
+@using JustASecond.Web.Pages.Shared
 @inject IUnitOfWork unitOfWork
 @inject NavigationManager NavigationManager
 
@@ -10,7 +11,7 @@
 
 @if (_products == null || _products.Count <= 0)
 {
-    <p><em>No Products avaliable</em></p>
+    <p><em>noproduc</em></p>
 }
 else
 {
@@ -31,7 +32,7 @@ else
                         <p class="info-text">@item.Description</p>
                     </div>
                     <div class="card-price">
-                        <button @onclick="() => AddToCart(item)" class="@_btncolorstyle">Add to cart</button>
+                        <button @onclick="() => AddToCart(item)"><span>Add to cart</span></button>
                         <h3>@item.Price</h3>
                     </div>
                 </div>
@@ -41,7 +42,7 @@ else
         </div>
 
         <div class="bottom-container">
-            <button @onclick="CallWaiter" class="btn-bottom-navbar @_btncolorstyle">Waiter<i class="fa fa-bell-o" aria-hidden="true"></i></button>
+            <button @onclick="CallWaiter" class="btn-bottom-navbar">Waiter<i class="fa fa-bell-o" aria-hidden="true"></i></button>
             <button @onclick="GoToBasket" class="btn-bottom-navbar"><i class="fa fa-shopping-cart" aria-hidden="true"></i></button>
         </div>
     </div>
@@ -59,11 +60,10 @@ else
     private List<Product> _products;
     private Order _order;
     private Customer _customer;
+    private JustASecond.DAL.Data.Models.WaiterCall _waiterCall;
     private string _added;
     private int? _highestpositionnr;
     private int _orderid;
-
-    private JustASecond.DAL.Data.Models.WaiterCall _waiterCall;
 
     private string _btncolorstyle;
 
@@ -77,6 +77,7 @@ else
 
     private async void AddToCart(Product product)
     {
+
         await InitializeOrder();
 
         // Neue OrderPosition -> OrderPositionNr um 1 erhöhen

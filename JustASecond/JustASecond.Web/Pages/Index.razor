@@ -30,13 +30,25 @@
 
         @if (orders == null)
         {
-            <Spinner></Spinner>
+@*            <Spinner></Spinner>*@
             return;
         }
         else if (orders.Count() < 1)
         {
             <p>No orders found.</p>
             return;
+        }
+
+
+        @foreach(var item in orders!)
+        {
+            <div class="order-container">
+                <p>@item.CreatedDate</p>
+                <hr>
+                <p>@item.Table.Id</p>
+                <hr>
+                <button>Orderdetails</button>
+            </div>
         }
 
         <div>

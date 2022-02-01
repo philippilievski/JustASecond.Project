@@ -40,6 +40,7 @@ namespace JustASecond.DAL.Repos
         public async Task<IEnumerable<Order>> GetAllSentOrders()
         {
             return await db.Orders!
+                .Include(x => x.Table)
                 .Where(x => x.Sent == true)
                 .ToArrayAsync();
         }

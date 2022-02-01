@@ -89,8 +89,18 @@ body {
         color: white;
         border: 0px;
         border-radius: 20px;
+        transition: 0.2s;
     }
 
+        .card-price button:active {
+            background-color: #608BAC;
+            box-shadow: inset 5px 5px 5px 5px #888888;
+        }
+
+            .card-price button:active span::after {
+                transform: translateY(10px);
+                content: " \2713";
+            }
 
 .info-text {
     margin-left: 1vw;
@@ -108,10 +118,15 @@ body {
     border-radius: 20px;
     border-color: transparent;
 }
+
+    .btn-bottom-navbar:active {
+        background-color: #A0FFDA;
+    }
 /*
     Onclick
 */
 
+/*
 .btn-successfull {
     transition: background-color 0.2s ease-in;
 }
@@ -119,3 +134,4 @@ body {
     .btn-successfull:focus {
         background-color: #A0FFDA;
     }
+*/
