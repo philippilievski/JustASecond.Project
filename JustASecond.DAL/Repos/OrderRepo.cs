@@ -271,5 +271,16 @@ namespace JustASecond.DAL.Repos
             orderupdated.Sent = sent;
             db.Orders.Update(orderupdated);
         }
+
+        public async Task<List<Order>> GetOrderHistoryFromCustomer(Customer customer)
+        {
+
+            return await db.Orders
+                            .Include(x => x.Customer)
+                            .Include(x => x.OrderPositions)
+                            .Where(x => x.Customer == customer)
+                            .Where(x => x.Sent == true)
+                            .ToListAsync();
+        }
     }
 }

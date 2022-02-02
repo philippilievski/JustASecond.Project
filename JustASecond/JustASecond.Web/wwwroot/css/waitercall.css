@@ -50,6 +50,7 @@ body {
     margin: 20px;
     display: flex;
     flex-direction: column;
+    box-shadow: 2px 2px 30px 1px rgba(0, 0, 0, 0.2);
 }
 
 .card-image {
@@ -86,13 +87,14 @@ body {
     .card-price button {
         width: 30vw;
         height: 4vh;
-        background-color: #96C0E3;
+        background-color: #608BAC;
         color: white;
         border: 0px;
         border-radius: 20px;
         transition: 0.2s;
         -webkit-transition-duration: 0.2s; /* Safari */
         margin: 5%;
+        box-shadow: 2px 2px 30px 1px rgba(0, 0, 0, 0.2);
     }
 
         .card-price button:active {
@@ -116,10 +118,11 @@ body {
     margin: 20px;
     height: 7vh;
     width: 30vw;
-    background-color: #96C0E3;
+    background-color: #608BAC;
     color: white;
     border-radius: 20px;
     border-color: transparent;
+    box-shadow: 2px 2px 30px 4px rgba(0, 0, 0, 0.2);
 }
 
     .btn-bottom-navbar:active {

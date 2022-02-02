@@ -32,6 +32,7 @@ namespace JustASecond.DAL.Interfaces
         Task<OrderPosition> GetOrderPositionFromProductId(int orderId, int productId);
         Task RemoveOrderPosition(int orderId, int position);
         Task SetOrderPositionAmount(int orderId, int position, int amount);
+        Task<List<Order>> GetOrderHistoryFromCustomer(Customer customer);
         Task SetOrderSent(int orderId, bool sent);
         Task SetOrderCompleted(int orderId, DateTime? completedDate);
     }

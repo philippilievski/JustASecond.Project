@@ -8,7 +8,6 @@
 @if (Orderpositions != null && _order.Sent == false)
 {
     <div class="page-container">
-        <button class="btn-go-back"><i class="fa fa-arrow-left" aria-hidden="true"></i></button>
         <div class="top-container">
             <h3>Cart</h3>
         </div>
@@ -22,13 +21,13 @@
                         <div class="description">
                             <p>@item.Product.Title</p>
                         </div>
-                        <div class="price">
-                            <h4>@item.Product.Price</h4>
-                        </div>
                         <div class="amount-change">
                             <button class="btn-change" @onclick="async () => await LowerOrderPositionAmount(item.OrderId, item.Position, item.Amount)">-</button>
                             <input type="number" @bind-value="item.Amount" />
                             <button class="btn-change" @onclick="async () => await RaiseOrderPositionAmount(item.OrderId, item.Position, item.Amount)">+</button>
+                        </div>
+                        <div class="price">
+                            <h4>@item.Product.Price</h4>
                         </div>
                     </div>
                 }
@@ -37,11 +36,41 @@
         <div class="divider"></div>
         <div class="footer-container">
             <div class="total">
-                <p>Total</p>
-                <p>@total</p>
+                <p class="info-text">Total </p>
+                <p><span>@total</span></p>
             </div>
             <button @onclick="PlaceOrder" class="btn-place-order">Place order</button>
         </div>
+
+        <div class="show-history-container">
+            <p class="info-text">Show my history <input type="checkbox" value="@ShowHistoryFlag" @onclick="ShowHistory"></p>
+        </div>
+
+        @if(HistoryOrders == null)
+        {
+        }
+        else
+        {
+            <div class="history-container">
+                <h3>My history</h3>
+                @foreach(var op in HistoryOrders)
+                {
+                    @foreach(var item in op.OrderPositions)
+                    {
+                        <div class="item-container">
+                            <img src="/images/food/@item.Product.Image" />
+                            <div class="description">
+                                <p>@item.Product.Title</p>
+                            </div>
+                            <div class="price">
+                                <h4>@item.Product.Price</h4>
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+            <div class="big-divider"></div>
+        }
     </div>
 }
 
@@ -57,13 +86,16 @@
 
     private Order _order;
     private List<OrderPosition> Orderpositions;
+    private List<Order> HistoryOrders;
+    private Customer Customer;
+    private bool ShowHistoryFlag = false;
     private decimal total;
 
     protected async override Task OnInitializedAsync()
     {
         _order = await unitOfWork.OrderRepo.GetOrder(OrderId);
         Orderpositions = await unitOfWork.OrderRepo.GetOrderPositionsFromOrder(_order);
-
+        Customer = await unitOfWork.CustomerRepo.GetCustomerById(CustomerId);
         total = CalcTotal();
     }
 
@@ -105,5 +137,19 @@
         await unitOfWork.OrderRepo.SetOrderSent(_order.Id, true);
         await unitOfWork.SaveChanges();
         navigationManager.NavigateTo($"/confirmation/{TableId}/{CustomerName}/{CustomerId}");
+    }
+
+    private async Task ShowHistory()
+    {
+        if(ShowHistoryFlag == false)
+        {
+            HistoryOrders = await unitOfWork.OrderRepo.GetOrderHistoryFromCustomer(Customer);
+            ShowHistoryFlag = true;
+        }
+        else
+        {
+            ShowHistoryFlag = false;
+            HistoryOrders = null;
+        }
     }
 }
