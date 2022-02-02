@@ -53,13 +53,13 @@ body {
 .btn {
     margin: 20px;
     width: 30vw;
-    background-color: #96C0E3;
+    background-color: #608BAC;
     color: white;
     border-radius: 20px;
 }
 
     .btn:hover {
-        background-color: #96C0E3;
+        background-color: #608BAC;
     }
 
 .username-input {
