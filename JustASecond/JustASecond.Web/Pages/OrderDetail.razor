@@ -21,17 +21,16 @@
 else if (orderPositions.Count() < 1)
 {
     <p>No order positions found.</p>
-    return;
 }
-
-<div class="order-container-header">
-    <p>#</p>
-    <p>Product</p>
-    <p>Amount</p>
-    <p>Price</p>
-    <p>Total</p>
-</div>
-@{
+else
+{
+    <div class="order-container-header">
+        <p>#</p>
+        <p>Product</p>
+        <p>Amount</p>
+        <p>Price</p>
+        <p>Total</p>
+    </div>
     int orderPositionDisplay = 0;
     @foreach (var item in orderPositions)
     {
