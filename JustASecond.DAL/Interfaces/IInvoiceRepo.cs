@@ -4,6 +4,6 @@ namespace JustASecond.DAL.Interfaces
 {
     public interface IInvoiceRepo
     {
-        Task CreateInvoicePDF(Order order, int invoinceNumber);
+        void CreateInvoicePDF(Order order, int invoinceNumber);
     }
 }

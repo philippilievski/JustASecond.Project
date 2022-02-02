@@ -2,12 +2,6 @@
 using JustASecond.DAL.Data.Models;
 using JustASecond.DAL.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace JustASecond.DAL.Repos
 {
@@ -33,12 +27,11 @@ namespace JustASecond.DAL.Repos
         public Task<List<Customer>> GetAllCustomers()
         {
             throw new NotImplementedException();
-
         }
 
         public async Task<Customer> GetCustomerById(int customerid)
         {
-            return await db.Customers.Where(x => x.Id == customerid).FirstAsync();
+            return await db.Customers.Where(x => x.Id == customerid).FirstOrDefaultAsync();
         }
 
         public async Task<Order> GetPendingOrderFromCustomer(Customer customer)

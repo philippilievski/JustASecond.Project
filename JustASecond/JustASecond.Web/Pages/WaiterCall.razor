@@ -1,52 +1,56 @@
-﻿@using JustASecond.DAL.Data.Models
+﻿@page "/waitercall/{tableID:int}/{_name}/{_customerId:int}"
+@using JustASecond.DAL.Data.Models
 @using JustASecond.DAL.Interfaces
 @using JustASecond.Web.Pages.Shared
 @inject IUnitOfWork unitOfWork
 @inject NavigationManager NavigationManager
 
-
-@page "/waitercall/{tableID:int}/{_name}/{_customerId:int}"
-
 <link rel="stylesheet" href="/css/waitercall.css" />
 
-@if (_products == null || _products.Count <= 0)
-{
-    <p><em>noproduc</em></p>
-}
-else
-{
-    <div class="page-container">
-        <div class="top-container">
-            <h2>Hello, @_name!</h2>
-        </div>
+<div class="page-container">
+    <div class="top-container">
+        <h2>Hello, @_name!</h2>
+    </div>
 
-        @foreach (var item in _products)
-        {
-            <div class="menu-container">
-                <div class="food-card">
-                    <div class="card-image">
-                        <img src="/images/food/@item.Image" />
-                    </div>
-                    <div class="card-description">
-                        <h2>@item.Title</h2>
-                        <p class="info-text">@item.Description</p>
-                    </div>
-                    <div class="card-price">
-                        <button @onclick="() => AddToCart(item)"><span>Add to cart</span></button>
-                        <h3>@item.Price</h3>
+    @if (_products == null)
+    {
+        <Spinner></Spinner>
+    }
+    else if (_products.Count < 1)
+    {
+        <p>No products found.</p>
+    }
+    else
+    {
+        <div class="page-container">
+            @foreach (var item in _products)
+            {
+                <div class="menu-container">
+                    <div class="food-card">
+                        <div class="card-image">
+                            <img src="/images/food/@item.Image" />
+                        </div>
+                        <div class="card-description">
+                            <h2>@item.Title</h2>
+                            <p class="info-text">@item.Description</p>
+                        </div>
+                        <div class="card-price">
+                            <button @onclick="() => AddToCart(item)"><span>Add to cart</span></button>
+                            <h3>@item.Price</h3>
+                        </div>
                     </div>
                 </div>
+            }
+            <div class="divider-container">
             </div>
-        }
-        <div class="divider-container">
-        </div>
 
-        <div class="bottom-container">
-            <button @onclick="CallWaiter" class="btn-bottom-navbar">Waiter<i class="fa fa-bell-o" aria-hidden="true"></i></button>
-            <button @onclick="GoToBasket" class="btn-bottom-navbar"><i class="fa fa-shopping-cart" aria-hidden="true"></i></button>
+            <div class="bottom-container">
+                <button @onclick="CallWaiter" class="btn-bottom-navbar">Waiter<i class="fa fa-bell-o" aria-hidden="true"></i></button>
+                <button @onclick="GoToBasket" class="btn-bottom-navbar"><i class="fa fa-shopping-cart" aria-hidden="true"></i></button>
+            </div>
         </div>
-    </div>
-}
+    }
+</div>
 
 @code {
     [Parameter]
@@ -61,9 +65,7 @@ else
     private Order _order;
     private Customer _customer;
     private JustASecond.DAL.Data.Models.WaiterCall _waiterCall;
-    private string _added;
     private int? _highestpositionnr;
-    private int _orderid;
 
     private string _btncolorstyle;
 

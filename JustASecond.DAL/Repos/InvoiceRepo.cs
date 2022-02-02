@@ -7,7 +7,7 @@ namespace JustASecond.DAL.Repos
 {
     public class InvoiceRepo : IInvoiceRepo
     {
-        public async Task CreateInvoicePDF(Order order, int invoinceNumber)
+        public void CreateInvoicePDF(Order order, int invoinceNumber)
         {
             var document = new PdfDocument();
             var page = document.AddPage();

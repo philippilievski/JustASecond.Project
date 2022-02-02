@@ -57,7 +57,6 @@
 
     private Order _order;
     private List<OrderPosition> Orderpositions;
-
     private decimal total;
 
     protected async override Task OnInitializedAsync()
@@ -72,6 +71,7 @@
     {
         await unitOfWork.OrderRepo.SetOrderPositionAmount(orderId, position, amount + 1);
         total = CalcTotal();
+        await unitOfWork.SaveChanges();
     }
 
     private async Task LowerOrderPositionAmount(int orderId, int position, int amount)
@@ -84,6 +84,7 @@
         else
         {
             await unitOfWork.OrderRepo.SetOrderPositionAmount(orderId, position, amount - 1);
+            await unitOfWork.SaveChanges();
         }
         Orderpositions = await unitOfWork.OrderRepo.GetOrderPositionsFromOrder(_order);
         total = CalcTotal();
@@ -92,7 +93,7 @@
     private decimal CalcTotal()
     {
         total = 0;
-        foreach(var item in Orderpositions)
+        foreach (var item in Orderpositions)
         {
             total += (item.Product.Price * item.Amount);
         }
@@ -101,7 +102,7 @@
 
     public async void PlaceOrder()
     {
-        await unitOfWork.OrderRepo.SetOrderSent(_order);
+        await unitOfWork.OrderRepo.SetOrderSent(_order.Id, true);
         await unitOfWork.SaveChanges();
         navigationManager.NavigateTo($"/confirmation/{TableId}/{CustomerName}/{CustomerId}");
     }

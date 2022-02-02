@@ -37,11 +37,19 @@ namespace JustASecond.DAL.Repos
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<Order>> GetAllSentOrders()
+        public async Task<IEnumerable<Order>> GetAllPendingOrders()
         {
             return await db.Orders!
                 .Include(x => x.Table)
-                .Where(x => x.Sent == true)
+                .Where(x => x.Sent && x.Completed == null)
+                .ToArrayAsync();
+        }
+
+        public async Task<IEnumerable<Order>> GetAllCompletedOrders()
+        {
+            return await db.Orders!
+                .Include(x => x.Table)
+                .Where(x => x.Completed != null)
                 .ToArrayAsync();
         }
 
@@ -205,7 +213,7 @@ namespace JustASecond.DAL.Repos
         {
             var table = db.Tables!
                             .Where(x => x.Id == tableid)
-                            .FirstAsync();
+                            .FirstOrDefaultAsync();
 
             return await table;
         }
@@ -239,20 +247,29 @@ namespace JustASecond.DAL.Repos
 
         public async Task SetOrderPositionAmount(int orderId, int position, int amount)
         {
-            (await db.OrderPositions
+            var orderPosition = await db.OrderPositions
                 .Where(x => x.OrderId == orderId && x.Position == position)
-                .FirstOrDefaultAsync())
-                .Amount = amount;
+                .FirstOrDefaultAsync();
+            orderPosition.Amount = amount;
+            db.OrderPositions.Update(orderPosition);
         }
 
-        public async Task SetOrderSent(Order order)
+        public async Task SetOrderCompleted(int orderId, DateTime? completedDate)
+        {
+            var order = await db.Orders
+                .Where(x => x.Id == orderId)
+                .FirstOrDefaultAsync();
+            order.Completed = completedDate;
+            db.Orders.Update(order);
+        }
+
+        public async Task SetOrderSent(int orderId, bool sent)
         {
             var orderupdated = await db.Orders
-                            .Where(x => x.Id == order.Id)
+                            .Where(x => x.Id == orderId)
                             .FirstOrDefaultAsync();
-
-            orderupdated.Sent = true;
-            db.Update(orderupdated);
+            orderupdated.Sent = sent;
+            db.Orders.Update(orderupdated);
         }
     }
 }

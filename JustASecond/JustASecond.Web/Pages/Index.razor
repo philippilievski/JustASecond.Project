@@ -18,7 +18,7 @@
     <Authorized>
 
         <div class="topnav">
-            <a href="#">Orders</a>
+            <a href="/">Orders</a>
             <a href="#">Tables</a>
             <a href="#">History</a>
             <form method="post" action="Identity/Account/LogOut">
@@ -30,11 +30,11 @@
         <div class="header">
             <h3>Orders</h3>
         </div>
-        <hr class="divider"/>
+        <hr class="divider" />
 
         @if (orders == null)
         {
-@*            <Spinner></Spinner>*@
+            @*            <Spinner></Spinner>*@
             return;
         }
         else if (orders.Count() < 1)
@@ -47,7 +47,7 @@
             <p>Table</p>
             <p>Details</p>
         </div>
-        @foreach(var item in orders!)
+        @foreach (var item in orders!)
         {
             <div class="order-container">
                 <p>@item.CreatedDate</p>
@@ -58,13 +58,13 @@
             </div>
         }
 
-        
+
         <div class="header">
             <h3>Calls</h3>
         </div>
-        <hr class="divider"/>
+        <hr class="divider" />
 
-        @if(waiterCalls == null)
+        @if (waiterCalls == null)
         {
             <h4>no calls...</h4>
         }
@@ -74,7 +74,7 @@
                 <p>Time</p>
                 <p>Table</p>
             </div>
-            @foreach(var item in waiterCalls!)
+            @foreach (var item in waiterCalls!)
             {
                 <div class="order-container">
                     <p>@item.CalledAt</p>
@@ -89,7 +89,6 @@
 @code
 {
     private IEnumerable<OrderPositionView> currentOrderPositions;
-    private OrderView selectedOrder;
     private IEnumerable<Order> orders;
     private IEnumerable<JustASecond.DAL.Data.Models.WaiterCall> waiterCalls;
 
@@ -113,7 +112,7 @@
             Tables = (await unitOfWork.OrderRepo.GetTables()).ToList();
         }
 
-        orders = await unitOfWork.OrderRepo.GetAllSentOrders();
+        orders = await unitOfWork.OrderRepo.GetAllPendingOrders();
         waiterCalls = await unitOfWork.WaiterRepo.GetWaiterCalls();
     }
 
