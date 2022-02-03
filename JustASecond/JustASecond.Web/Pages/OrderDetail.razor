@@ -46,11 +46,12 @@ else
 }
 
 <div class="complete-order-container">
-    <button @onclick="async () => await CompleteOrder(OrderId)">Complete</button>
+    <button @onclick="async () => await CompleteOrder(OrderId)" disabled="@(order == null || order.Completed != null)">Complete</button>
 </div>
 
 @code {
     private IEnumerable<OrderPositionView> orderPositions;
+    private Order order;
 
     [Parameter]
     public int OrderId { get; set; }
@@ -59,6 +60,7 @@ else
     {
         await base.OnInitializedAsync();
         orderPositions = await unitOfWork.OrderRepo.GetAllPositionsFromOrder(OrderId);
+        order = await unitOfWork.OrderRepo.GetOrder(OrderId);
     }
 
     private async Task CompleteOrder(int orderId)

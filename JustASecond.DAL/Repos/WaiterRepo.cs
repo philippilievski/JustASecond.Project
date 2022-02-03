@@ -2,12 +2,6 @@
 using JustASecond.DAL.Data.Models;
 using JustASecond.DAL.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace JustASecond.DAL.Repos
 {
@@ -24,10 +18,20 @@ namespace JustASecond.DAL.Repos
         {
             await _context.WaiterCalls.AddAsync(waiterCall);
         }
-        public async Task<IEnumerable<WaiterCall>> GetWaiterCalls()
+
+        public async Task<IEnumerable<WaiterCall>> GetPendingWaiterCalls()
         {
             return await _context.WaiterCalls
                                     .Include(x => x.Table)
+                                    .Where(x => x.AcceptedAt == null)
+                                    .ToArrayAsync();
+        }
+
+        public async Task<IEnumerable<WaiterCall>> GetCompletedWaiterCalls()
+        {
+            return await _context.WaiterCalls
+                                    .Include(x => x.Table)
+                                    .Where(x => x.AcceptedAt != null)
                                     .ToArrayAsync();
         }
     }
