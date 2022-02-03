@@ -7,6 +7,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JustASecond.Web", "JustASec
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JustASecond.DAL", "..\JustASecond.DAL\JustASecond.DAL.csproj", "{6C03C9B6-CA62-4933-9A41-FF5C764B1635}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentation", "{0153B6AB-C239-4CAD-BD5D-A636E5530D88}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\..\..\Desktop\PP\JustASecond.docx = ..\..\..\..\Desktop\PP\JustASecond.docx
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
