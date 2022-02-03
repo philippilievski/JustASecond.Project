@@ -21,6 +21,10 @@ namespace JustASecond.DAL.Repos
             this.db = db;
         }
 
+        /// <summary>
+        /// Holt alle Bestellungen aus der Datenbank
+        /// </summary>
+        /// <returns></returns>
         public async Task<IEnumerable<OrderView>> GetAllOrders()
         {
             return await db.Orders!
@@ -37,6 +41,10 @@ namespace JustASecond.DAL.Repos
                 .ToListAsync();
         }
 
+        /// <summary>
+        /// Holt alle Bestellungen, welche abgesendet wurden aus der Datenbank
+        /// </summary>
+        /// <returns></returns>
         public async Task<IEnumerable<Order>> GetAllSentOrders()
         {
             return await db.Orders!
@@ -45,30 +53,44 @@ namespace JustASecond.DAL.Repos
                 .ToArrayAsync();
         }
 
+        /// <summary>
+        /// Fügt der Datenbank eine Bestellung hinzu
+        /// </summary>
+        /// <param name="order"></param>
+        /// <returns></returns>
         public async Task AddOrder(Order order)
         {
             await db.Orders!.AddAsync(order);
             await db.SaveChangesAsync();
         }
 
+        /// <summary>
+        /// Fügt der Datenbank einen Tisch hinzu
+        /// </summary>
+        /// <param name="table"></param>
+        /// <returns></returns>
         public async Task AddTable(Table table)
         {
             await db.Tables!.AddAsync(table);
             await db.SaveChangesAsync();
         }
 
+        /// <summary>
+        /// Fügt der Datenbank einen WaiterCall hinzu
+        /// </summary>
+        /// <param name="call"></param>
+        /// <returns></returns>
         public async Task AddWaiterCall(WaiterCall call)
         {
             await db.WaiterCalls!.AddAsync(call);
             await db.SaveChangesAsync();
         }
 
-        public async Task AddWaiterOrder(WaiterOrder waiterOrder)
-        {
-            await db.WaiterOrders!.AddAsync(waiterOrder);
-            await db.SaveChangesAsync();
-        }
-
+        /// <summary>
+        /// Holt sich eine Bestellung mit einer gewissen ID aus der Datenbank
+        /// </summary>
+        /// <param name="orderId"></param>
+        /// <returns></returns>
         public async Task<Order> GetOrder(int orderId)
         {
             var query = from o in db.Orders
@@ -78,6 +100,11 @@ namespace JustASecond.DAL.Repos
             return await query.FirstOrDefaultAsync();
         }
 
+
+        /// <summary>
+        /// Holt sich alle Tische aus der Datenbank
+        /// </summary>
+        /// <returns></returns>
         public async Task<IEnumerable<Table>> GetTables()
         {
             var query = from o in db.Tables
@@ -86,78 +113,11 @@ namespace JustASecond.DAL.Repos
             return await query.ToListAsync();
         }
 
-        public async Task<IEnumerable<WaiterCall>> GetWaiterCalls(string waiterId)
-        {
-            var query = from w in db.WaiterCalls
-                        where w.WaiterId == waiterId
-                        select w;
-
-            return await query.ToListAsync();
-        }
-
-        public async Task<WaiterOrder> GetWaiterOrder(int orderId, string waiterId)
-        {
-            var query = from w in db.WaiterOrders
-                        where w.OrderId == orderId && w.WaiterId == waiterId
-                        select w;
-
-            return await query.FirstOrDefaultAsync();
-        }
-
-        public async Task<bool> OrderExists(int orderId)
-        {
-            var query = from o in db.Orders
-                        where o.Id == orderId
-                        select o;
-
-            return await query.AnyAsync();
-        }
-
-        public async Task RemoveOrder(Order order)
-        {
-            db.Orders!.Remove(order);
-            await db.SaveChangesAsync();
-        }
-
-        public async Task RemoveTable(Table table)
-        {
-            db.Tables!.Remove(table);
-            await db.SaveChangesAsync();
-        }
-
-        public async Task RemoveWaiterCall(WaiterCall call)
-        {
-            db.WaiterCalls!.Remove(call);
-            await db.SaveChangesAsync();
-        }
-
-        public async Task RemoveWaiterOrder(WaiterOrder waiterOrder)
-        {
-            db.WaiterOrders!.Remove(waiterOrder);
-            await db.SaveChangesAsync();
-        }
-
-        public async Task UpdateOrder(Order order)
-        {
-            db.Orders!.Update(order);
-            await db.SaveChangesAsync();
-        }
-
-        public async Task UpdateWaiterOrder(WaiterOrder waiterOrder)
-        {
-            db.WaiterOrders!.Update(waiterOrder);
-            await db.SaveChangesAsync();
-        }
-
-        public async Task<bool> WaiterOrderExists(int orderId, string waiterId)
-        {
-            var query = from w in db.WaiterOrders
-                        where w.OrderId == orderId && w.WaiterId == waiterId
-                        select w;
-
-            return await query.AnyAsync();
-        }
-
+        /// <summary>
+        /// Holt sich alle Bestellpositionen einer Bestellung aus der Datenbank
+        /// </summary>
+        /// <param name="orderId"></param>
+        /// <returns></returns>
         public async Task<IEnumerable<OrderPositionView>> GetAllPositionsFromOrder(int orderId)
         {
             return await db.OrderPositions!
@@ -178,6 +138,11 @@ namespace JustASecond.DAL.Repos
                 .ToListAsync();
         }
 
+        /// <summary>
+        /// Holt sich die höchte Bestellpositionsnummer einer Bestellung aus der Datenbank
+        /// </summary>
+        /// <param name="order"></param>
+        /// <returns></returns>
         public async Task<int?> GetHighestPositionFromOrderposition(Order order)
         {
             int? highest = await db.OrderPositions
@@ -193,14 +158,11 @@ namespace JustASecond.DAL.Repos
             return highest;
         }
 
-        public async Task<int> GetHighestOrderID()
-        {
-            var highest = db.Orders
-                            .MaxAsync(x => x.Id);
-
-            return await highest;
-        }
-
+        /// <summary>
+        /// Holt sich den Tisch einer übergebenen ID aus der Datenbank
+        /// </summary>
+        /// <param name="tableid"></param>
+        /// <returns></returns>
         public async Task<Table> GetTableByID(int tableid)
         {
             var table = db.Tables!
@@ -210,6 +172,12 @@ namespace JustASecond.DAL.Repos
             return await table;
         }
 
+
+        /// <summary>
+        /// Holt sich alle Bestellpositionen der übergebenen Bestellung aus der Datenbank
+        /// </summary>
+        /// <param name="order"></param>
+        /// <returns></returns>
         public async Task<List<OrderPosition>> GetOrderPositionsFromOrder(Order order)
         {
             var orderpositions = db.OrderPositions!
@@ -221,6 +189,7 @@ namespace JustASecond.DAL.Repos
             return await orderpositions;
         }
 
+        
         public async Task<OrderPosition> GetOrderPositionFromProductId(int orderId, int productId)
         {
             return await db.OrderPositions
@@ -229,6 +198,13 @@ namespace JustASecond.DAL.Repos
                 .FirstOrDefaultAsync();
         }
 
+
+        /// <summary>
+        /// Entfernt eine Bestellposition aus der Datenbank
+        /// </summary>
+        /// <param name="orderId"></param>
+        /// <param name="position"></param>
+        /// <returns></returns>
         public async Task RemoveOrderPosition(int orderId, int position)
         {
             var foundOrderPosition = await db.OrderPositions
@@ -237,6 +213,14 @@ namespace JustASecond.DAL.Repos
             db.OrderPositions.Remove(foundOrderPosition);
         }
 
+
+        /// <summary>
+        /// Setzt die Anzahl eines Artikels einer Bestellposition
+        /// </summary>
+        /// <param name="orderId"></param>
+        /// <param name="position"></param>
+        /// <param name="amount"></param>
+        /// <returns></returns>
         public async Task SetOrderPositionAmount(int orderId, int position, int amount)
         {
             (await db.OrderPositions
@@ -245,6 +229,11 @@ namespace JustASecond.DAL.Repos
                 .Amount = amount;
         }
 
+        /// <summary>
+        /// Setzt die Eigenschaft Sent der übergebenen Bestellung auf true
+        /// </summary>
+        /// <param name="order"></param>
+        /// <returns></returns>
         public async Task SetOrderSent(Order order)
         {
             var orderupdated = await db.Orders
@@ -255,6 +244,11 @@ namespace JustASecond.DAL.Repos
             db.Update(orderupdated);
         }
 
+        /// <summary>
+        /// Holt sich alle Bestellungen eines Kunden, welche bereits abgeschickt wurden
+        /// </summary>
+        /// <param name="customer"></param>
+        /// <returns></returns>
         public async Task<List<Order>> GetOrderHistoryFromCustomer(Customer customer)
         {
 

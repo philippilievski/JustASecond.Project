@@ -104,12 +104,14 @@
         total = CalcTotal();
     }
 
+    //Erhöht die Anzahl des Produkts um eins
     private async Task RaiseOrderPositionAmount(int orderId, int position, int amount)
     {
         await unitOfWork.OrderRepo.SetOrderPositionAmount(orderId, position, amount + 1);
         total = CalcTotal();
     }
 
+    //Reduziert die Anzahl des Produkts um eins
     private async Task LowerOrderPositionAmount(int orderId, int position, int amount)
     {
         if (amount <= 1)
@@ -125,6 +127,10 @@
         total = CalcTotal();
     }
 
+    /// <summary>
+    /// Rechnet den Gesamtbetrag aller Bestellpositionen zusammen
+    /// </summary>
+    /// <returns></returns>
     private decimal CalcTotal()
     {
         total = 0;
@@ -142,6 +148,7 @@
         navigationManager.NavigateTo($"/confirmation/{TableId}/{CustomerName}/{CustomerId}");
     }
 
+    //Zeigt alle abgeschlossenen Bestellungen eines Kunden an
     private async Task ShowHistory()
     {
         if(ShowHistoryFlag == false)

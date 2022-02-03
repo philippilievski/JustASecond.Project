@@ -11,7 +11,7 @@
 
 @if (_products == null || _products.Count <= 0)
 {
-    <p><em>noproduc</em></p>
+    <p><em>Products Loading...</em></p>
 }
 else
 {
@@ -42,7 +42,7 @@ else
         </div>
 
         <div class="bottom-container">
-            <button @onclick="CallWaiter" class="btn-bottom-navbar">Waiter<i class="fa fa-bell-o" aria-hidden="true"></i></button>
+            <button @onclick="CallWaiter" class="btn-bottom-navbar">Waiter <i class="fa fa-bell-o" aria-hidden="true"></i></button>
             <button @onclick="GoToBasket" class="btn-bottom-navbar"><i class="fa fa-shopping-cart" aria-hidden="true"></i></button>
         </div>
     </div>
@@ -61,11 +61,10 @@ else
     private Order _order;
     private Customer _customer;
     private JustASecond.DAL.Data.Models.WaiterCall _waiterCall;
+
     private string _added;
     private int? _highestpositionnr;
     private int _orderid;
-
-    private string _btncolorstyle;
 
     protected async override Task OnInitializedAsync()
     {
@@ -75,6 +74,8 @@ else
         await InitializeOrder();
     }
 
+    
+    ///Fügt dem Warenkorb ein Produkt hinzu
     private async void AddToCart(Product product)
     {
         await InitializeOrder();
@@ -137,7 +138,5 @@ else
             };
         await unitOfWork.WaiterRepo.AddWaiterCall(_waiterCall);
         await unitOfWork.SaveChanges();
-
-        _btncolorstyle = "btn-successfull";
     }
 }

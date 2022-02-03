@@ -20,10 +20,20 @@ namespace JustASecond.DAL.Repos
             _context = applicationDbContext;
         }
 
+        /// <summary>
+        /// Fügt der Datenbank einen neuen WaiterCall hinzu
+        /// </summary>
+        /// <param name="waiterCall"></param>
+        /// <returns></returns>
         public async Task AddWaiterCall(WaiterCall waiterCall)
         {
             await _context.WaiterCalls.AddAsync(waiterCall);
         }
+
+        /// <summary>
+        /// Holt sich alle WaiterCalls aus der Datenbank
+        /// </summary>
+        /// <returns></returns>
         public async Task<IEnumerable<WaiterCall>> GetWaiterCalls()
         {
             return await _context.WaiterCalls

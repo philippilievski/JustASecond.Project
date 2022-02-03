@@ -7,6 +7,12 @@ namespace JustASecond.DAL.Repos
 {
     public class InvoiceRepo : IInvoiceRepo
     {
+        /// <summary>
+        /// Erstellt eine Rechnung im PDF Format auf Basis einer Bestellung
+        /// </summary>
+        /// <param name="order"></param>
+        /// <param name="invoinceNumber"></param>
+        /// <returns></returns>
         public async Task CreateInvoicePDF(Order order, int invoinceNumber)
         {
             var document = new PdfDocument();
