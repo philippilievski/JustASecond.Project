@@ -22,6 +22,11 @@ body {
     text-align: center;
 }
 
+.text-divider {
+    margin-top: 20%;
+    margin-left: 5%;
+}
+
 .content-container {
     margin-top: 8vh;
     display: flex;
@@ -67,7 +72,7 @@ body {
 }
 
 .amount-change {
-    display:flex;
+    display: flex;
     margin: 0;
     flex-direction: row;
     justify-content: center;
@@ -76,7 +81,6 @@ body {
 
     .amount-change * {
         height: 4vh;
-
     }
 
     .amount-change input {
@@ -108,7 +112,7 @@ body {
     flex-direction: column;
     width: 20vw;
     justify-content: center;
-    text-align:center;
+    text-align: center;
     margin-right: 5vw;
 }
 

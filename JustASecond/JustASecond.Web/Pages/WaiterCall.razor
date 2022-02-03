@@ -75,11 +75,13 @@
         _products = (await unitOfWork.ProductRepo.GetAllProducts()).ToList();
         _customer = await unitOfWork.CustomerRepo.GetCustomerById(_customerId);
         await InitializeOrder();
+        await unitOfWork.SaveChanges();
     }
 
     private async void AddToCart(Product product)
     {
         await InitializeOrder();
+        await unitOfWork.SaveChanges();
 
         // Neue OrderPosition -> OrderPositionNr um 1 erhöhen
         _highestpositionnr = await unitOfWork.OrderRepo.GetHighestPositionFromOrderposition(_order) + 1;
