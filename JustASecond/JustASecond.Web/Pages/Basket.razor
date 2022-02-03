@@ -59,36 +59,36 @@ else if (Orderpositions != null && !_order.Sent)
         </div>
         <button @onclick="PlaceOrder" disabled="@(_order == null || _order.OrderPositions.Count < 1 || _order.Sent)" class="btn-place-order">Place order</button>
     </div>
+}
 
-    <div class="show-history-container">
-        <p class="info-text">Show my history <input type="checkbox" value="@ShowHistoryFlag" @onclick="ShowHistory"></p>
-    </div>
-    @if (HistoryOrders != null && HistoryOrders.Count < 1)
-    {
-        <p>No orders found in your history.</p>
-    }
-    else if (HistoryOrders != null)
-    {
-        <div class="history-container">
-            <h3>My history</h3>
-            @foreach (var op in HistoryOrders)
+<div class="show-history-container">
+    <p class="info-text">Show my history <input type="checkbox" value="@ShowHistoryFlag" @onclick="ShowHistory"></p>
+</div>
+@if (HistoryOrders != null && HistoryOrders.Count < 1)
+{
+    <p>No orders found in your history.</p>
+}
+else if (HistoryOrders != null)
+{
+    <div class="history-container">
+        <h3>My history</h3>
+        @foreach (var op in HistoryOrders)
+        {
+            @foreach (var item in op.OrderPositions)
             {
-                @foreach (var item in op.OrderPositions)
-                {
-                    <div class="item-container">
-                        <img src="/images/food/@item.Product.Image" />
-                        <div class="description">
-                            <p>@item.Product.Title</p>
-                        </div>
-                        <div class="price">
-                            <h4>@item.Product.Price</h4>
-                        </div>
+                <div class="item-container">
+                    <img src="/images/food/@item.Product.Image" />
+                    <div class="description">
+                        <p>@item.Product.Title</p>
                     </div>
-                }
+                    <div class="price">
+                        <h4>@item.Product.Price</h4>
+                    </div>
+                </div>
             }
-        </div>
-        <div class="big-divider"></div>
-    }
+        }
+    </div>
+    <div class="big-divider"></div>
 }
 
 @code {
