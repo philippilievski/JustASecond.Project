@@ -13,7 +13,7 @@ namespace JustASecond.DAL.Repos
         /// <param name="order"></param>
         /// <param name="invoinceNumber"></param>
         /// <returns></returns>
-        public async Task CreateInvoicePDF(Order order, int invoinceNumber)
+        public void CreateInvoicePDF(Order order, int invoinceNumber)
         {
             var document = new PdfDocument();
             var page = document.AddPage();

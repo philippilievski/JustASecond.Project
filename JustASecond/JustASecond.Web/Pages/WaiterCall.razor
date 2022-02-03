@@ -1,45 +1,48 @@
-﻿@using JustASecond.DAL.Data.Models
+﻿@page "/waitercall/{tableID:int}/{_name}/{_customerId:int}"
+@using JustASecond.DAL.Data.Models
 @using JustASecond.DAL.Interfaces
 @using JustASecond.Web.Pages.Shared
 @inject IUnitOfWork unitOfWork
 @inject NavigationManager NavigationManager
 
-
-@page "/waitercall/{tableID:int}/{_name}/{_customerId:int}"
-
 <link rel="stylesheet" href="/css/waitercall.css" />
 
-@if (_products == null || _products.Count <= 0)
-{
-    <p><em>Products Loading...</em></p>
-}
-else
-{
-    <div class="page-container">
-        <div class="top-container">
-            <h2>Hello, @_name!</h2>
-        </div>
+<div class="page-container">
+    <div class="top-container">
+        <h2>Hello, @_name!</h2>
+    </div>
 
-        @foreach (var item in _products)
-        {
-            <div class="menu-container">
-                <div class="food-card">
-                    <div class="card-image">
-                        <img src="/images/food/@item.Image" />
-                    </div>
-                    <div class="card-description">
-                        <h2>@item.Title</h2>
-                        <p class="info-text">@item.Description</p>
-                    </div>
-                    <div class="card-price">
-                        <button @onclick="() => AddToCart(item)"><span>Add to cart</span></button>
-                        <h3>@item.Price</h3>
+    @if (_products == null)
+    {
+        <Spinner></Spinner>
+    }
+    else if (_products.Count < 1)
+    {
+        <p>No products found.</p>
+    }
+    else
+    {
+        <div class="page-container">
+            @foreach (var item in _products)
+            {
+                <div class="menu-container">
+                    <div class="food-card">
+                        <div class="card-image">
+                            <img src="/images/food/@item.Image" />
+                        </div>
+                        <div class="card-description">
+                            <h2>@item.Title</h2>
+                            <p class="info-text">@item.Description</p>
+                        </div>
+                        <div class="card-price">
+                            <button @onclick="() => AddToCart(item)"><span>Add to cart</span></button>
+                            <h3>@item.Price</h3>
+                        </div>
                     </div>
                 </div>
+            }
+            <div class="divider-container">
             </div>
-        }
-        <div class="divider-container">
-        </div>
 
         <div class="bottom-container">
             <button @onclick="CallWaiter" class="btn-bottom-navbar">Waiter <i class="fa fa-bell-o" aria-hidden="true"></i></button>
@@ -64,7 +67,6 @@ else
 
     private string _added;
     private int? _highestpositionnr;
-    private int _orderid;
 
     protected async override Task OnInitializedAsync()
     {
@@ -72,6 +74,7 @@ else
         _products = (await unitOfWork.ProductRepo.GetAllProducts()).ToList();
         _customer = await unitOfWork.CustomerRepo.GetCustomerById(_customerId);
         await InitializeOrder();
+        await unitOfWork.SaveChanges();
     }
 
     
@@ -79,6 +82,7 @@ else
     private async void AddToCart(Product product)
     {
         await InitializeOrder();
+        await unitOfWork.SaveChanges();
 
         // Neue OrderPosition -> OrderPositionNr um 1 erhöhen
         _highestpositionnr = await unitOfWork.OrderRepo.GetHighestPositionFromOrderposition(_order) + 1;

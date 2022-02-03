@@ -12,12 +12,12 @@ namespace JustASecond.DAL.Data
         {
         }
 
-        public DbSet<Order>? Orders { get; set; }
-        public DbSet<OrderPosition>? OrderPositions { get; set; }
-        public DbSet<Product>? Products { get; set; }
-        public DbSet<Table>? Tables { get; set; }
-        public DbSet<WaiterOrder>? WaiterOrders { get; set; }
-        public DbSet<WaiterCall>? WaiterCalls { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderPosition> OrderPositions { get; set; }
+        public DbSet<Product> Products { get; set; }
+        public DbSet<Table> Tables { get; set; }
+        public DbSet<WaiterOrder> WaiterOrders { get; set; }
+        public DbSet<WaiterCall> WaiterCalls { get; set; }
         public DbSet<Customer> Customers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)

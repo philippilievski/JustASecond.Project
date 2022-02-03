@@ -4,7 +4,7 @@
 
 <h3>Invoice Printer</h3>
 
-<button @onclick="(async ()=> await _uow.InvoiceRepo.CreateInvoicePDF(new Order(), 1))">print invoice</button>
+<button @onclick="(()=> _uow.InvoiceRepo.CreateInvoicePDF(new Order(), 1))">print invoice</button>
 
 @code {
 

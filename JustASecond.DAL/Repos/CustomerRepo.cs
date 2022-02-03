@@ -2,12 +2,6 @@
 using JustASecond.DAL.Data.Models;
 using JustASecond.DAL.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace JustASecond.DAL.Repos
 {
@@ -30,6 +24,16 @@ namespace JustASecond.DAL.Repos
             await db.SaveChangesAsync();
         }
 
+        public Task AddCustomer(string name)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<List<Customer>> GetAllCustomers()
+        {
+            throw new NotImplementedException();
+        }
+
         /// <summary>
         /// Holt einen Kunden mit übergebener ID aus der Datenbank
         /// </summary>
@@ -37,7 +41,7 @@ namespace JustASecond.DAL.Repos
         /// <returns>Customer</returns>
         public async Task<Customer> GetCustomerById(int customerid)
         {
-            return await db.Customers.Where(x => x.Id == customerid).FirstAsync();
+            return await db.Customers.Where(x => x.Id == customerid).FirstOrDefaultAsync();
         }
 
         /// <summary>

@@ -4,13 +4,14 @@
 @using JustASecond.Web.Data.ModelViews
 @using JustASecond.Web.Pages.Shared;
 @inject IUnitOfWork unitOfWork
+@inject NavigationManager navigationManager
 
 <link rel="stylesheet" href="/css/mainstyle.css">
 
 <div class="header">
     <h3>Order Detail</h3>
 </div>
-<hr class="divider"/>
+<hr class="divider" />
 
 @if (orderPositions == null)
 {
@@ -20,19 +21,18 @@
 else if (orderPositions.Count() < 1)
 {
     <p>No order positions found.</p>
-    return;
 }
-
-<div class="order-container-header">
-    <p>#</p>
-    <p>Product</p>
-    <p>Amount</p>
-    <p>Price</p>
-    <p>Total</p>
-</div>
-@{
+else
+{
+    <div class="order-container-header">
+        <p>#</p>
+        <p>Product</p>
+        <p>Amount</p>
+        <p>Price</p>
+        <p>Total</p>
+    </div>
     int orderPositionDisplay = 0;
-    @foreach(var item in orderPositions)
+    @foreach (var item in orderPositions)
     {
         orderPositionDisplay++;
         <div class="order-container">
@@ -46,11 +46,12 @@ else if (orderPositions.Count() < 1)
 }
 
 <div class="complete-order-container">
-    <button>Complete</button>
+    <button @onclick="async () => await CompleteOrder(OrderId)" disabled="@(order == null || order.Completed != null)">Complete</button>
 </div>
 
 @code {
     private IEnumerable<OrderPositionView> orderPositions;
+    private Order order;
 
     [Parameter]
     public int OrderId { get; set; }
@@ -59,5 +60,13 @@ else if (orderPositions.Count() < 1)
     {
         await base.OnInitializedAsync();
         orderPositions = await unitOfWork.OrderRepo.GetAllPositionsFromOrder(OrderId);
+        order = await unitOfWork.OrderRepo.GetOrder(OrderId);
+    }
+
+    private async Task CompleteOrder(int orderId)
+    {
+        await unitOfWork.OrderRepo.SetOrderCompleted(orderId, DateTime.Now);
+        await unitOfWork.SaveChanges();
+        navigationManager.NavigateTo("/");
     }
 }

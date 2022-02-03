@@ -1,77 +1,94 @@
 ﻿@page "/basket/{OrderId:int}/{TableId:int}/{CustomerName}/{CustomerId:int}"
 @using JustASecond.DAL.Interfaces
+@using JustASecond.Web.Pages.Shared
 @inject IUnitOfWork unitOfWork
 @inject NavigationManager navigationManager
 
 <link rel="stylesheet" href="/css/basket.css" />
 
-@if (Orderpositions != null && _order.Sent == false)
+<div class="page-container">
+    <div class="top-container">
+        <h3>Cart</h3>
+    </div>
+</div>
+
+@if (Orderpositions == null || _order == null || _order.Sent)
 {
-    <div class="page-container">
-        <div class="top-container">
-            <h3>Cart</h3>
-        </div>
-        <div class="content-container">
-            @foreach (var item in Orderpositions)
+    <Spinner></Spinner>
+}
+else if (Orderpositions.Count < 1)
+{
+    <p class="info-text text-divider">No products where added to your basket.</p>
+}
+else if (_order.Sent)
+{
+    <p class="info-text text-divider">Your order has already been placed.</p>
+}
+else if (Orderpositions != null && !_order.Sent)
+{
+    <div class="content-container">
+        @foreach (var item in Orderpositions)
+        {
+            @if (@item.Product != null)
             {
-                @if (@item.Product != null)
-                {
-                    <div class="item-container">
-                        <img src="/images/food/@item.Product.Image" />
-                        <div class="description">
-                            <p>@item.Product.Title</p>
-                        </div>
-                        <div class="amount-change">
-                            <button class="btn-change" @onclick="async () => await LowerOrderPositionAmount(item.OrderId, item.Position, item.Amount)">-</button>
-                            <input type="number" @bind-value="item.Amount" />
-                            <button class="btn-change" @onclick="async () => await RaiseOrderPositionAmount(item.OrderId, item.Position, item.Amount)">+</button>
-                        </div>
-                        <div class="price">
-                            <h4>@item.Product.Price</h4>
-                        </div>
+                <div class="item-container">
+                    <img src="/images/food/@item.Product.Image" />
+                    <div class="description">
+                        <p>@item.Product.Title</p>
                     </div>
-                }
+                    <div class="amount-change">
+                        <button class="btn-change" @onclick="async () => await LowerOrderPositionAmount(item.OrderId, item.Position, item.Amount)">-</button>
+                        <input type="number" @bind-value="item.Amount" />
+                        <button class="btn-change" @onclick="async () => await RaiseOrderPositionAmount(item.OrderId, item.Position, item.Amount)">+</button>
+                    </div>
+                    <div class="price">
+                        <h4>@item.Product.Price</h4>
+                    </div>
+                </div>
             }
-        </div>
-        <div class="divider"></div>
-        <div class="footer-container">
-            <div class="total">
-                <p class="info-text">Total </p>
-                <p><span>@total</span></p>
-            </div>
-            <button @onclick="PlaceOrder" class="btn-place-order">Place order</button>
-        </div>
-
-        <div class="show-history-container">
-            <p class="info-text">Show my history <input type="checkbox" value="@ShowHistoryFlag" @onclick="ShowHistory"></p>
-        </div>
-
-        @if(HistoryOrders == null)
-        {
-        }
-        else
-        {
-            <div class="history-container">
-                <h3>My history</h3>
-                @foreach(var op in HistoryOrders)
-                {
-                    @foreach(var item in op.OrderPositions)
-                    {
-                        <div class="item-container">
-                            <img src="/images/food/@item.Product.Image" />
-                            <div class="description">
-                                <p>@item.Product.Title</p>
-                            </div>
-                            <div class="price">
-                                <h4>@item.Product.Price</h4>
-                            </div>
-                        </div>
-                    }
-                }
-            </div>
-            <div class="big-divider"></div>
         }
     </div>
+    <div class="divider"></div>
+    <div class="footer-container">
+        <div class="total">
+            <p class="info-text">Total </p>
+            @if (_order != null && total != null)
+            {
+                <p><span>@total</span></p>
+            }
+        </div>
+        <button @onclick="PlaceOrder" disabled="@(_order == null || _order.OrderPositions.Count < 1 || _order.Sent)" class="btn-place-order">Place order</button>
+    </div>
+}
+
+<div class="show-history-container">
+    <p class="info-text">Show my history <input type="checkbox" value="@ShowHistoryFlag" @onclick="ShowHistory"></p>
+</div>
+@if (HistoryOrders != null && HistoryOrders.Count < 1)
+{
+    <p>No orders found in your history.</p>
+}
+else if (HistoryOrders != null)
+{
+    <div class="history-container">
+        <h3>My history</h3>
+        @foreach (var op in HistoryOrders)
+        {
+            @foreach (var item in op.OrderPositions)
+            {
+                <div class="item-container">
+                    <img src="/images/food/@item.Product.Image" />
+                    <div class="description">
+                        <p>@item.Product.Title</p>
+                    </div>
+                    <div class="price">
+                        <h4>@item.Product.Price</h4>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+    <div class="big-divider"></div>
 }
 
 @code {
@@ -86,21 +103,16 @@
 
     private Order _order;
     private List<OrderPosition> Orderpositions;
-
     private List<Order> HistoryOrders;
     private Customer Customer;
-
     private bool ShowHistoryFlag = false;
-
-
-    private decimal total;
+    private decimal? total = 0;
 
     protected async override Task OnInitializedAsync()
     {
         _order = await unitOfWork.OrderRepo.GetOrder(OrderId);
         Orderpositions = await unitOfWork.OrderRepo.GetOrderPositionsFromOrder(_order);
         Customer = await unitOfWork.CustomerRepo.GetCustomerById(CustomerId);
-
         total = CalcTotal();
     }
 
@@ -109,6 +121,7 @@
     {
         await unitOfWork.OrderRepo.SetOrderPositionAmount(orderId, position, amount + 1);
         total = CalcTotal();
+        await unitOfWork.SaveChanges();
     }
 
     //Reduziert die Anzahl des Produkts um eins
@@ -122,6 +135,7 @@
         else
         {
             await unitOfWork.OrderRepo.SetOrderPositionAmount(orderId, position, amount - 1);
+            await unitOfWork.SaveChanges();
         }
         Orderpositions = await unitOfWork.OrderRepo.GetOrderPositionsFromOrder(_order);
         total = CalcTotal();
@@ -131,10 +145,10 @@
     /// Rechnet den Gesamtbetrag aller Bestellpositionen zusammen
     /// </summary>
     /// <returns></returns>
-    private decimal CalcTotal()
+    private decimal? CalcTotal()
     {
         total = 0;
-        foreach(var item in Orderpositions)
+        foreach (var item in Orderpositions)
         {
             total += (item.Product.Price * item.Amount);
         }
@@ -143,7 +157,7 @@
 
     public async void PlaceOrder()
     {
-        await unitOfWork.OrderRepo.SetOrderSent(_order);
+        await unitOfWork.OrderRepo.SetOrderSent(_order.Id, true);
         await unitOfWork.SaveChanges();
         navigationManager.NavigateTo($"/confirmation/{TableId}/{CustomerName}/{CustomerId}");
     }
@@ -151,7 +165,7 @@
     //Zeigt alle abgeschlossenen Bestellungen eines Kunden an
     private async Task ShowHistory()
     {
-        if(ShowHistoryFlag == false)
+        if (ShowHistoryFlag == false)
         {
             HistoryOrders = await unitOfWork.OrderRepo.GetOrderHistoryFromCustomer(Customer);
             ShowHistoryFlag = true;
@@ -162,4 +176,4 @@
             HistoryOrders = null;
         }
     }
-}
+    }

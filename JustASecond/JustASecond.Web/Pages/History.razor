@@ -1,6 +1,6 @@
-﻿@page "/"
+﻿@page "/history"
 
-<PageTitle>Index</PageTitle>
+<PageTitle>History</PageTitle>
 
 @using JustASecond.DAL.Data.ModelViews
 @using JustASecond.DAL.Data.Models
@@ -86,7 +86,7 @@
             }
         }
     </Authorized>
-</AuthorizeView>
+</AuthorizeView>>
 
 @code
 {
@@ -114,8 +114,8 @@
             Tables = (await unitOfWork.OrderRepo.GetTables()).ToList();
         }
 
-        orders = await unitOfWork.OrderRepo.GetAllPendingOrders();
-        waiterCalls = await unitOfWork.WaiterRepo.GetPendingWaiterCalls();
+        orders = await unitOfWork.OrderRepo.GetAllCompletedOrders();
+        waiterCalls = await unitOfWork.WaiterRepo.GetCompletedWaiterCalls();
     }
 
     private void OpenOrderDetails(int orderId)
